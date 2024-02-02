@@ -1,0 +1,34 @@
+<section class="add-list">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Brand ADD</h4>
+      <h6>{{id ? 'Update' : 'Add'}} Brand</h6>
+    </div>
+  </div>
+</section>
+
+<section class="from-section">
+  <form #formElement="ngForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()" class="area-border">
+    <div class="grid">
+      <div class="from">
+        <mat-label>Brand Name</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="name" required matInput />
+          <mat-error>This field is required.</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="from">
+      <mat-label>Description</mat-label>
+      <mat-form-field appearance="outline">
+        <textarea class="text-area" formControlName="description" matInput></textarea>
+      </mat-form-field>
+    </div>
+    <div class="btn">
+      <button mat-raised-button type="submit" class="btn-submit">{{id ? 'Update' : 'Submit'}} </button>
+      <button routerLink="/product/brand-list" mat-raised-button class="btn-submit color">Cancel</button>
+    </div>
+  </form>
+</section>
+

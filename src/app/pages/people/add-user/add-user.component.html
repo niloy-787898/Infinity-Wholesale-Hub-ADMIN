@@ -1,0 +1,83 @@
+<section class="add-list">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>User Management</h4>
+      <h6>Add/Update User</h6>
+    </div>
+  </div>
+</section>
+
+<section class="from-section">
+  <form #formElement="ngForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()" class="area-border">
+    <div class="grid">
+      <div class="from">
+        <mat-label>First Name</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="firstname" matInput />
+        </mat-form-field>
+      </div>
+      <div class="from">
+        <mat-label>Last Name</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="lastname" matInput />
+        </mat-form-field>
+      </div>
+      <div class="from">
+        <mat-label>User Name</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="username" matInput />
+        </mat-form-field>
+      </div>
+      <div class="from">
+        <mat-label>Password</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="password" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="from">
+        <mat-label>Phone</mat-label>
+        <mat-form-field appearance="outline">
+          <input formControlName="phone" matInput />
+        </mat-form-field>
+      </div>
+      <div class="from">
+        <mat-label>Email</mat-label>
+        <mat-form-field appearance="outline">
+          <input formControlName="email" matInput />
+        </mat-form-field>
+      </div>
+      <div class="from">
+        <mat-label>Role</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Choose Unit</mat-label> -->
+          <mat-select formControlName="role" placeholder="Select">
+            <mat-option value="Fruits">Fruits</mat-option>
+            <mat-option value="Vegetables">Vegetables</mat-option>
+            <mat-option value="Electronic">Electronic</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>User Image</label>
+      <div class="image-upload">
+        <input type="file">
+        <div class="image-uploads">
+          <img src="../../../../assets/images/svg/upload.svg" alt="img">
+          <h4>Drag and drop a file to upload</h4>
+        </div>
+      </div>
+    </div>
+    <div class="btn">
+      <button mat-raised-button type="submit" class="btn-submit">Submit</button>
+      <button mat-raised-button type="submit" class="btn-submit color">Cancel</button>
+    </div>
+  </form>
+</section>
+

@@ -1,0 +1,166 @@
+@import "/src/theme/_base.scss";
+
+mat-form-field {
+  width: 100%;
+  font-family: "Nunito", sans-serif;
+}
+
+mat-label {
+  font-family: "Nunito", sans-serif;
+  margin-bottom: 8px;
+  color: #212B36;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: #FF9F43;
+}
+
+
+/* To change mat form field border color on focus */
+:host ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+  color: #FF9F43;
+}
+
+.add-list {
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    margin-bottom: 20px;
+
+    .page-title {
+
+      h4 {
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        color: #212b36;
+        font-size: 18px;
+        line-height: 0;
+      }
+
+      h6 {
+        font-family: "Nunito", sans-serif;
+        font-size: 14px;
+        color: #555;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.area-border {
+  border: 1px solid rgba(145, 158, 171, 0.32);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.print-barcode-content {
+  h4 {
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    color: #637381;
+  }
+}
+
+.input-groupicon {
+  position: relative;
+}
+
+.addonset {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  line-height: 0;
+  transform: translateY(-50%);
+}
+
+.container {
+  display: block;
+  max-width: 1200px;
+  width: 96%;
+  margin: auto;
+}
+
+th {
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #212B36;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+
+.table-responsive {
+  overflow-x: auto !important;
+  margin-bottom: 80px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  background: #FAFBFE;
+  border-bottom: 1px solid #E9ECEF;
+
+}
+
+td,
+th {
+  text-align: left;
+  padding: 8px;
+}
+
+.prginator-area {
+  margin-bottom: 30px;
+
+  .dataTables_length {
+
+    label {
+      h6 {
+        margin-bottom: 8px;
+        color: #212B36;
+        font-weight: 400;
+        font-size: 14px;
+      }
+
+      .custom-select {
+        width: 100% !important;
+        max-width: 215px !important;
+        height: 40px;
+        font-size: 0.875rem;
+        border-radius: 0.2rem;
+        border: 1px solid #ced4da;
+      }
+    }
+  }
+}
+
+
+
+.btn-submit {
+  min-width: 120px;
+  background: #FF9F43;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 7px 15px;
+  transition: all 0.2s ease;
+  margin-right: 10px;
+
+  &:hover {
+    background: #fe820e;
+    color: #fff;
+  }
+}
+
+.color {
+  background: #637381 !important;
+
+  &:hover {
+    background: #424b52 !important;
+    color: #fff !important;
+  }
+}

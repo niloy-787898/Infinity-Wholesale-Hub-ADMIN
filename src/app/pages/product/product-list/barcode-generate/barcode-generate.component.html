@@ -1,0 +1,67 @@
+<div class="gap-mid"></div>
+
+
+<input [(ngModel)]="printCount">
+<!-- styleSheetFile="../../../../assets/css/barcode.css"-->
+<button mat-raised-button (click)="onGenerate()">Generate</button>
+<button mat-raised-button (click)="onClear()">Clear</button>
+
+<button (click)="onPrintConfirm()"
+        mat-raised-button
+        printSectionId="print-section-barcode"
+        ngxPrint
+        [useExistingCss]="true">
+  <mat-icon aria-label="Example icon-button with a heart icon">print</mat-icon>
+  Print
+</button>
+
+<div class="gap-small"></div>
+
+
+<!--<div class="view">-->
+<!--  <ngx-barcode *ngFor="let c of loop" [bc-value]="product?.productCode" [bc-height]="35" [bc-width]="0.8"></ngx-barcode>-->
+<!--</div>-->
+<div id="print-section-barcode">
+  <div class="area" *ngFor="let i of loop">
+    <div class="name">
+      <p>{{product?.name.length > 20 ? ((product?.name | slice: 0: 20) + '..') : product?.name}}</p>
+    </div>
+    <ngx-barcode6
+      [bc-value]="product?.productId"
+      [bc-height]="18"
+      [bc-width]="1.4"
+      [bc-format]="'MSI'"
+      bc-font-size="10"
+      bc-margin-top="10"
+      bc-text-margin="0"
+      [bc-display-value]="true"
+    >
+    </ngx-barcode6>
+
+    <!--    <ngx-barcode-->
+    <!--      [bc-value]="product?.productCode"-->
+    <!--      [bc-height]="18"-->
+    <!--      [bc-width]="1.4"-->
+    <!--      bc-font-size="10"-->
+    <!--      bc-margin-top="10"-->
+    <!--      bc-text-margin="0"-->
+    <!--      [bc-display-value]="true">-->
+    <!--    </ngx-barcode>-->
+    <div class="bottom">
+      <h5>TK: {{product?.salePrice}}</h5>
+      <p>Imported by Sun Electronics Pos</p>
+    </div>
+  </div>
+</div>
+
+
+<!--<button ngxPrintItemButton printItemId="print">Print first item directly</button>-->
+<!--<button ngxPrintItemButton className="printident">-->
+<!--  Print item by className with this button-->
+<!--</button>-->
+<!--<button ngxPrintItemButton divID="print-section-barcode">-->
+<!--  Print div by id with this button-->
+<!--</button>-->
+<!--<button ngxPrintItemButton printWindow="true"> Print whole window with this button </button>-->
+
+<!--<page size="A4" class="printident"></page>-->

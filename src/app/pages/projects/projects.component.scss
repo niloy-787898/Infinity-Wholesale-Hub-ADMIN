@@ -1,0 +1,14 @@
+@import "src/theme/common/data-list";
+
+
+.card-radius {
+  padding: 10px 16px;
+  min-height: 70px;
+
+  .right-action {
+    display: flex;
+    &.gray {
+      background-color: $color-accent;
+    }
+  }
+}

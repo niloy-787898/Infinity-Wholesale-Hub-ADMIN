@@ -1,0 +1,163 @@
+<section class="page-list">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>User List</h4>
+      <h6>Manage your User</h6>
+    </div>
+    <div class="page-btn">
+      <div class="page-btn">
+        <a routerLink="/people/add-user" class="btn btn-added">
+          <img src="../../../../assets/images/svg/plus.svg" alt="img" class="me-1">
+          <span>Add User</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="table-section">
+  <div class="mat-elevation-z8">
+    <div class="table-top">
+      <div class="search-set">
+        <div class="search-path">
+          <a class="btn btn-filter" id="filter_search">
+            <img src="../../../../assets/images/svg/filter.svg" alt="img" />
+          </a>
+        </div>
+        <div class="search-input">
+          <a class="btn btn-searchset"><img src="../../../../assets/images/svg/search-white.svg" alt="img" /></a>
+          <div id="DataTables_Table_0_filter" class="dataTables_filter">
+            <label>
+              <input type="search" class="form-control form-control-sm" placeholder="Search..."
+                aria-controls="DataTables_Table_0" /></label>
+          </div>
+        </div>
+      </div>
+       <div class="wordset">
+        <ul>
+          <li>
+            <button
+              mat-icon-button
+              matTooltip="Export Excel"
+              aria-label="Example icon-button with a heart icon"
+            >
+              <mat-icon class="material-symbols-outlined">download</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button
+              mat-icon-button
+              matTooltip="Import Excel"
+              aria-label="Example icon-button with a heart icon"
+            >
+              <mat-icon class="material-symbols-outlined">upload</mat-icon>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+     <div class="button-area">
+      <div  class="left ng-star-inserted">
+        <button
+          mat-stroked-button=""
+          color="accent"
+          class="mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        >
+          <span class="mat-button-wrapper">
+            <mat-icon
+              role="img"
+              class="mat-icon notranslate material-icons mat-icon-no-color"
+              aria-hidden="true"
+              data-mat-icon-type="font"
+              >close</mat-icon
+            >
+            Clear FilterData
+          </span>
+          <span matripple="" class="mat-ripple mat-button-ripple"></span>
+          <span class="mat-button-focus-overlay"></span>
+        </button>
+      </div>
+
+      <div class="delete-area">
+        <button
+          *ngIf="checkDeletePermission"
+          mat-stroked-button
+          color="warn"
+          (click)="openConfirmDialog('delete')"
+          matTooltip="Delete"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="container">
+      <div class="table-responsive">
+        <table>
+          <tr class="table-row">
+            <th>ID</th>
+            <th>Profile</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>User name</th>
+            <th>email</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          <tr *ngFor="let data of users; index as i ">
+            <td>{{i+1}}</td>
+            <td>{{data.image}}</td>
+            <td>{{data.firstname}}</td>
+            <td>{{data.lastname}}</td>
+            <td>{{data.username}}</td>
+            <td>{{data.phone}}</td>
+            <td>{{data.email}}</td>
+            <td>{{data.roll}}</td>
+              <td class="button">
+              <button
+                mat-mini-fab
+                color="accent"
+                [routerLink]="['../edit-users/', data._id]"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <!-- <button mat-mini-fab color="warn" (click)="deleteUsersById(data._id)">
+                <mat-icon>delete</mat-icon>
+              </button> -->
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="prginator-area">
+      <div class="dataTables_length" id="DataTables_Table_0_length">
+        <label>
+          <span>Show per page:</span>
+          <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="custom-select">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </label>
+      </div>
+      <div class="count-area">
+        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+          1 - 10 of 11 items
+        </div>
+        <div class="dataTables_paginate paging_numbers" id="DataTables_Table_0_paginate">
+          <ul class="pagination">
+            <li>
+              <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">1</a>
+            </li>
+            <li class="paginate_button page-item">
+              <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">2</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-border"></div>
+  </div>
+</section>

@@ -1,0 +1,70 @@
+<section class="add-list">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Customer Management</h4>
+      <h6>{{id ? 'Update' : 'Add'}} Customer</h6>
+    </div>
+  </div>
+</section>
+
+<section class="from-section">
+  <form #formElement="ngForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()" class="area-border">
+    <div class="grid">
+      <div class="from">
+        <mat-label>Customer Name</mat-label>
+        <mat-form-field appearance="outline">
+          <input formControlName="name" matInput required placeholder="Enter name" />
+          <mat-error>This field is required.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="from">
+        <mat-label>Email</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <input type="email" formControlName="email" matInput /> -->
+          <input type="email" formControlName="email" matInput placeholder="Enter customer email">
+        </mat-form-field>
+      </div>
+
+      <div class="from">
+        <mat-label>Phone</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="phone" matInput required digitOnly type="number"  placeholder="Enter Phone No"/>
+          <mat-error>This field is required.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- <div class="from">
+        <mat-label>Address</mat-label>
+        <mat-form-field appearance="outline">
+          <input formControlName="address" matInput required/>
+          <mat-error>This field is required.</mat-error>
+        </mat-form-field>
+      </div> -->
+
+    <div class="from">
+      <mat-label>Address</mat-label>
+      <mat-form-field appearance="outline">
+        <textarea class="text-area" formControlName="address" matInput></textarea>
+      </mat-form-field>
+    </div>
+
+    </div>
+    <!-- <div class="form-group">
+      <label>Avatar</label>
+      <div class="image-upload">
+        <input type="file">
+        <div class="image-uploads">
+          <img src="../../../../assets/images/svg/upload.svg" alt="img">
+          <h4>Drag and drop a file to upload</h4>
+        </div>
+      </div>
+    </div> -->
+    <div class="btn">
+      <button mat-raised-button type="submit" class="btn-submit">Submit</button>
+      <button mat-raised-button class="btn-submit color" (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</section>
+

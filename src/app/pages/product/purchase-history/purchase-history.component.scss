@@ -1,0 +1,30 @@
+@import "/src/theme/exports/_table-list.scss";
+
+
+
+table {
+  margin-bottom: 40px;
+}
+
+td {
+  padding: 10px 0;
+}
+
+.table-top {
+  justify-content: start;
+  gap: 20px;
+}
+
+.header {
+
+  h2 {
+    margin: 0;
+    font-family: $font-en-nunito;
+    font-weight: 800;
+    font-size: 22px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #212b36;
+    text-align: center;
+  }
+}

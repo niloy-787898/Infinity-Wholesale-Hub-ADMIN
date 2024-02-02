@@ -1,0 +1,14 @@
+@import "/src/theme/exports/_add-from.scss";
+
+.grid-customer {
+  display: grid;
+  grid-template-columns: 24% 74%;
+  justify-content: space-between;
+
+}
+
+@media(max-width: 600px){
+  .grid-customer {
+    grid-template-columns: 1fr;
+  }
+}

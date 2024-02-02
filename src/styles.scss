@@ -1,0 +1,13 @@
+
+// Core
+@import "src/theme/base";
+@import "src/theme/material/theme";
+@import "src/theme/fonts";
+
+
+
+.my-custom-dialog-class {
+    .mat-dialog-container {
+      height: auto!important;
+    }
+  }

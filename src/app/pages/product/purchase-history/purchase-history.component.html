@@ -1,0 +1,365 @@
+<section class="page-list">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Purchase History</h4>
+      <h6>Manage your history</h6>
+    </div>
+    <!--    <div class="page-btn">-->
+    <!--      <a routerLink="/sales/new-sales" class="btn btn-added">-->
+    <!--        <img src="/assets/images/svg/plus.svg" alt="img" />-->
+    <!--        <span>Add Sales</span>-->
+    <!--      </a>-->
+    <!--    </div>-->
+  </div>
+</section>
+
+<section class="table-section">
+  <div class="mat-elevation-z8">
+    <div class="table-top">
+      <!--      <div class="search-set">-->
+      <!--        <div (click)="onToggle()" class="filter-show">-->
+      <!--          <a class="btn btn-filter">-->
+      <!--            <span *ngIf="!toggleMenu" class="material-symbols-outlined"-->
+      <!--              >filter_alt</span-->
+      <!--            >-->
+      <!--            <a>-->
+      <!--              <a *ngIf="toggleMenu" class="close-button">-->
+      <!--                <span class="material-symbols-outlined">close</span>-->
+      <!--              </a>-->
+      <!--            </a>-->
+      <!--          </a>-->
+      <!--        </div>-->
+      <!--        <div class="search-input">-->
+      <!--          <a class="btn btn-searchset"-->
+      <!--            ><mat-icon class="mat-icons">search</mat-icon>-->
+      <!--          </a>-->
+      <!--          <form class="table-search" #searchForm="ngForm">-->
+      <!--            <input-->
+      <!--              type="search"-->
+      <!--              #searchInput-->
+      <!--              name="searchTerm"-->
+      <!--              autocomplete="off"-->
+      <!--              ngModel-->
+      <!--              placeholder="Search..."-->
+      <!--            />-->
+      <!--          </form>-->
+      <!--        </div>-->
+      <!--      </div>-->
+
+      <div class="date-filter">
+        <mat-form-field
+          class="mat-date-input-field"
+          appearance="outline"
+          (click)="picker.open()"
+        >
+          <mat-label class="filter-date">Filter Date</mat-label>
+          <mat-date-range-input
+            [formGroup]="dataFormDateRange"
+            [rangePicker]="picker"
+            [max]="today"
+          >
+            <input
+              matStartDate
+              formControlName="start"
+              placeholder="Start date"
+              readonly
+            />
+            <input
+              matEndDate
+              formControlName="end"
+              placeholder="End date"
+              readonly
+              (dateChange)="endChangeRegDateRange($event)"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          <mat-error
+            *ngIf="
+              dataFormDateRange.controls.start.hasError('matStartDateInvalid')
+            "
+          >Invalid start date
+          </mat-error>
+          <mat-error
+            *ngIf="dataFormDateRange.controls.end.hasError('matEndDateInvalid')"
+          >Invalid end date
+          </mat-error>
+        </mat-form-field>
+
+<!--        <div-->
+<!--          class="left"-->
+<!--          style="margin-bottom: 10px"-->
+<!--          *ngIf="filter || activeSort"-->
+<!--        >-->
+<!--          <button mat-stroked-button (click)="onRemoveAllQuery()">-->
+<!--            <mat-icon>close</mat-icon>-->
+<!--            Clear FilterData-->
+<!--          </button>-->
+<!--        </div>-->
+      </div>
+
+
+
+      <div class="sort">
+        <button
+          mat-raised-button
+          [matMenuTriggerFor]="menuMonth"
+          class="button-style"
+        >
+          {{months[activeFilter5]?.viewValue || 'Month'}}
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+        <mat-menu #menuMonth="matMenu">
+          <button
+            *ngFor="let data of months; let i = index"
+            mat-menu-item
+            (click)="filterData(data.value, i, 'month')"
+            [class.dropdown-active]="activeFilter5 === i"
+          >
+            {{ data?.viewValue }}
+          </button>
+        </mat-menu>
+      </div>
+
+
+      <div class="wordset">
+        <ul>
+          <!-- <li>
+            <button
+              mat-raised-button
+              color="accent"
+              matTooltip="Export as Excel"
+            >
+              <mat-icon>download</mat-icon>
+              Download
+            </button>
+          </li> -->
+          <!--          <li style="margin-left: 10px;">-->
+          <!--            <button-->
+          <!--              mat-raised-button-->
+          <!--              color="warn"-->
+          <!--              matTooltip="Import Excel">-->
+          <!--              <mat-icon>upload</mat-icon>-->
+          <!--              Upload-->
+          <!--            </button>-->
+          <!--          </li>-->
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="container filter-area"
+      [class]="toggleMenu ? 'filter-show' : 'filter-hide'"
+    >
+      <div>
+        <div class="filler">
+          <!-- <div class="date-filter">
+            <mat-form-field
+              class="mat-date-input-field"
+              appearance="outline"
+              (click)="picker.open()"
+            >
+              <mat-label class="filter-date">Filter Date</mat-label>
+              <mat-date-range-input
+                [formGroup]="dataFormDateRange"
+                [rangePicker]="picker"
+                [max]="today"
+              >
+                <input
+                  matStartDate
+                  formControlName="start"
+                  placeholder="Start date"
+                  readonly
+                />
+                <input
+                  matEndDate
+                  formControlName="end"
+                  placeholder="End date"
+                  readonly
+                  (dateChange)="endChangeRegDateRange($event)"
+                />
+              </mat-date-range-input>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+
+              <mat-error
+                *ngIf="
+                  dataFormDateRange.controls.start.hasError(
+                    'matStartDateInvalid'
+                  )
+                "
+                >Invalid start date
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  dataFormDateRange.controls.end.hasError('matEndDateInvalid')
+                "
+                >Invalid end date
+              </mat-error>
+            </mat-form-field>
+          </div> -->
+          <!-- <div class="left" style="margin-bottom: 10px" *ngIf="filter || activeSort">
+
+           <div class="sort">
+             <button
+               mat-raised-button
+               [matMenuTriggerFor]="menuBrand"
+               class="button-style"
+             >
+               Vendor
+               <mat-icon>keyboard_arrow_down</mat-icon>
+             </button>
+             <mat-menu #menuBrand="matMenu">
+               <button
+                 *ngFor="let data of brands; let i = index"
+                 mat-menu-item
+                 (click)="filterData(data._id, i, 'vendor')"
+                 [class.dropdown-active]="activeFilter1 === i"
+               >
+                 {{ data?.name }}
+               </button>
+             </mat-menu>
+           </div> -->
+
+          <!--          <div class="sort">-->
+          <!--            <button-->
+          <!--              mat-raised-button-->
+          <!--              [matMenuTriggerFor]="menuVendor"-->
+          <!--              class="button-style"-->
+          <!--            >-->
+          <!--              Salesman-->
+          <!--              <mat-icon>keyboard_arrow_down</mat-icon>-->
+          <!--            </button>-->
+          <!--            <mat-menu #menuVendor="matMenu">-->
+          <!--              <button-->
+          <!--                *ngFor="let data of salesmans; let i = index"-->
+          <!--                mat-menu-item-->
+          <!--                (click)="filterData(data._id, i, 'salesman')"-->
+          <!--                [class.dropdown-active]="activeFilter3 === i"-->
+          <!--              >-->
+          <!--                {{ data?.name }}-->
+          <!--                ({{ data?.phoneNo }})-->
+          <!--              </button>-->
+          <!--            </mat-menu>-->
+          <!--          </div>-->
+
+
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="button-area" *ngIf="selectedIds && selectedIds.length">
+      <div class="delete-area">
+        <button
+          *ngIf="checkDeletePermission"
+          mat-stroked-button
+          color="warn"
+          (click)="openConfirmDialog('delete')"
+          matTooltip="Delete"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <app-no-content
+      *ngIf="!isLoading && !productPurchases.length"
+      [matIcon]="'info'"
+      title="No data Found!"
+    ></app-no-content>
+
+    <div *ngFor="let data of productPurchases">
+      <div class="header">
+        <h2>{{ data?._id | date }}</h2>
+      </div>
+      <div class="container">
+        <div class="table-responsive">
+          <table *ngIf="productPurchases.length">
+            <tr class="table-row">
+              <th class="t-checkbox">
+                <mat-checkbox
+                  #matCheckbox
+                  (change)="onAllSelectChange($event)"
+                  class="mat-check"
+                ></mat-checkbox>
+              </th>
+              <th>Product</th>
+              <th>Previous Quantity</th>
+              <th>Quantity(+/-)</th>
+              <th>Purchase Price</th>
+              <th>Total Purchase</th>
+            </tr>
+            <tr *ngFor="let data of data.data" class="table-hover">
+              <td class="t-checkbox">
+                <mat-checkbox
+                  class="t-mat-checkbox"
+                  [(ngModel)]="data.select"
+                  (ngModelChange)="onCheckChange($event, i, data._id)"
+                ></mat-checkbox>
+              </td>
+              <td>{{ data?.product.name }} ({{ data?.product?.model ? data?.product?.model: ''}}{{ data?.product?.others ? ','+data?.product?.others: ''}}{{ data?.product?.sku ? ','+data?.product?.sku: ''}})</td>
+              <td>{{ data?.previousQuantity || "-" }}</td>
+              <td>{{ (data?.updatedQuantity - data?.previousQuantity) || "-"}}</td>
+              <td>৳{{ data?.product?.purchasePrice  | number : "" : "bn" || "-"}}</td>
+              <td>৳
+                {{ data?.product?.purchasePrice * (data?.updatedQuantity - data?.previousQuantity) | number : "" : "bn" || "-" }}</td>
+<!--              <td class="button">-->
+<!--                <button-->
+<!--                  mat-mini-fab-->
+<!--                  color="accent"-->
+<!--                  [routerLink]="['../new-sales/', data._id]"-->
+<!--                >-->
+<!--                  <mat-icon>edit</mat-icon>-->
+<!--                </button>-->
+
+<!--                <button-->
+<!--                  mat-icon-button-->
+<!--                  mat-mini-fab-->
+<!--                  matTooltip="Export Excel"-->
+<!--                  (click)="downloadPdfInvoice('download', data)"-->
+<!--                >-->
+<!--                  <mat-icon class="material-symbols-outlined"-->
+<!--                  >download</mat-icon-->
+<!--                  >-->
+<!--                </button>-->
+<!--              </td>-->
+            </tr>
+            <tr class="table-hover" style="background: #fff5ea">
+              <td></td>
+              <td></td>
+              <td></td>
+
+              <td></td>
+              <td></td>
+              <td style="font-weight: bold">
+                ৳{{ getSum(data.data) | number : "" : "bn" || "-" }}
+              </td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATE NGX SPINNER-->
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.3)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-pulse"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+

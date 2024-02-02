@@ -1,0 +1,304 @@
+<section class="page-list">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Vendor Expenses LIST</h4>
+      <h6>Manage your purchases</h6>
+    </div>
+    <div class="page-btn">
+      <div class="page-btn">
+        <a routerLink="/expense/add-expense" class="btn btn-added"
+          ><img src="/assets/images/svg/plus.svg" alt="img" class="me-1" /><span
+            >Add New Expense</span
+          ></a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="table-section">
+  <div class="mat-elevation-z8">
+    <div class="table-top">
+      <div class="search-set">
+        <div (click)="onToggle()" class="filter-show">
+          <a class="btn btn-filter">
+            <span *ngIf="!toggleMenu" class="material-symbols-outlined"
+              >filter_alt</span
+            >
+            <a>
+              <a *ngIf="toggleMenu" class="close-button">
+                <span class="material-symbols-outlined">close</span>
+              </a>
+            </a>
+          </a>
+        </div>
+        <div class="search-input">
+          <a class="btn btn-searchset"
+            ><mat-icon class="mat-icons">search</mat-icon>
+          </a>
+          <form class="table-search" #searchForm="ngForm">
+            <input
+              type="search"
+              #searchInput
+              name="searchTerm"
+              autocomplete="off"
+              ngModel
+              placeholder="Search..."
+            />
+          </form>
+        </div>
+      </div>
+      <div class="wordset">
+        <ul>
+          <li>
+            <button
+              mat-raised-button
+              color="accent"
+              matTooltip="Export as Excel"
+              (click)="exportToAllExcel()"
+            >
+              <mat-icon>download</mat-icon>
+              Download
+            </button>
+          </li>
+          <!--          <li style="margin-left: 10px;">-->
+          <!--            <button-->
+          <!--              mat-raised-button-->
+          <!--              color="warn"-->
+          <!--              matTooltip="Import Excel">-->
+          <!--              <mat-icon>upload</mat-icon>-->
+          <!--              Upload-->
+          <!--            </button>-->
+          <!--          </li>-->
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="container filter-area"
+      [class]="toggleMenu ? 'filter-show' : 'filter-hide'"
+    >
+      <div>
+        <div class="filler">
+          <div class="date-filter">
+            <mat-form-field
+              class="mat-date-input-field"
+              appearance="outline"
+              (click)="picker.open()"
+            >
+              <mat-label class="filter-date">Filter Date</mat-label>
+              <mat-date-range-input
+                [formGroup]="dataFormDateRange"
+                [rangePicker]="picker"
+                [max]="today"
+              >
+                <input
+                  matStartDate
+                  formControlName="start"
+                  placeholder="Start date"
+                  readonly
+                />
+                <input
+                  matEndDate
+                  formControlName="end"
+                  placeholder="End date"
+                  readonly
+                  (dateChange)="endChangeRegDateRange($event)"
+                />
+              </mat-date-range-input>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+
+              <mat-error
+                *ngIf="
+                  dataFormDateRange.controls.start.hasError(
+                    'matStartDateInvalid'
+                  )
+                "
+                >Invalid start date
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  dataFormDateRange.controls.end.hasError('matEndDateInvalid')
+                "
+                >Invalid end date
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- <div class="sort">
+            <button
+              mat-raised-button
+              [matMenuTriggerFor]="menuBrand"
+              class="button-style"
+            >
+              Brand
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #menuBrand="matMenu">
+              <button
+                *ngFor="let data of brands; let i = index"
+                mat-menu-item
+                (click)="filterData(data._id, i, 'brand')"
+                [class.dropdown-active]="activeFilter1 === i"
+              >
+                {{ data.name }}
+              </button>
+            </mat-menu>
+          </div> -->
+        </div>
+      </div>
+      <div
+        class="left"
+        style="margin-bottom: 10px"
+        *ngIf="filter || activeSort"
+      >
+        <div>
+          <button mat-stroked-button (click)="onRemoveAllQuery()">
+            <mat-icon>close</mat-icon>
+            Clear FilterData
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-area" *ngIf="selectedIds && selectedIds.length">
+      <div class="delete-area">
+        <button
+          *ngIf="checkDeletePermission"
+          mat-stroked-button
+          color="warn"
+          (click)="openConfirmDialog('delete')"
+          matTooltip="Delete"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <app-no-content
+      *ngIf="!isLoading && !transactions.length"
+      [matIcon]="'info'"
+      title="No data Found!"
+    ></app-no-content>
+
+    <div class="container">
+      <div class="table-responsive">
+        <table *ngIf="transactions.length">
+          <tr class="table-row">
+            <th class="t-checkbox">
+              <mat-checkbox
+                #matCheckbox
+                (change)="onAllSelectChange($event)"
+                class="mat-check"
+              ></mat-checkbox>
+            </th>
+            <!-- <th>ID</th> -->
+            <th>Images</th>
+            <th>Vendor</th>
+            <th>Paid Amount</th>
+            <th>Due Amount</th>
+            <th>Transaction Date</th>
+            <th>Action</th>
+          </tr>
+
+          <tr
+            *ngFor="
+              let data of transactions
+                | paginate
+                  : {
+                      itemsPerPage: TransactionsPerPage,
+                      currentPage: currentPage,
+                      totalItems: totalTransactions
+                    };
+              let i = index
+            "
+            class="table-hover"
+          >
+            <td class="t-checkbox">
+              <mat-checkbox
+                class="t-mat-checkbox"
+                [(ngModel)]="data.select"
+                (ngModelChange)="onCheckChange($event, i, data._id)"
+              ></mat-checkbox>
+            </td>
+            <!-- <td>{{ i + 1 }}</td> -->
+            <td class="product-img">
+              <img *ngIf="data?.images" [src]="data?.images ? data?.images[0] : ''" />
+              <p *ngIf="!data?.images">-</p>
+            </td>
+            <td>
+              {{ data?.vendor?.name }} ({{
+              data?.vendor?.phone || "-" | uppercase
+              }})
+            </td>
+            <td>{{ data.paidAmount || "-" }}</td>
+            <td>{{ data.dueAmount || "-" }}</td>
+            <td>{{ data.transactionDate | date }}</td>
+            <td class="button">
+              <button
+                matTooltip="Edit"
+                mat-mini-fab
+                color="accent"
+                [routerLink]="['../vendor-transition/', data._id]"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </tr>
+          <tr class="table-hover" style="background: #fff5ea">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="font-weight: bold">
+              {{ calculation?.totalPaid }}
+            </td>
+            <td style="font-weight: bold">
+              {{ calculation?.totalAmount }}
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="prginator-area" *ngIf="transactions.length">
+      <div class="dataTables_length">
+        <label>
+          <span>Show per page:</span>
+          <select
+            class="custom-select"
+            (change)="onSelectShowPerPage(val.value)"
+            #val
+          >
+            <option *ngFor="let data of number">
+              {{ data.num }}
+            </option>
+          </select>
+        </label>
+      </div>
+      <div class="count-area">
+        <div class="pagination-container">
+          <pagination-controls
+            class="data-pagination"
+            [autoHide]="true"
+            [maxSize]="15"
+            (pageChange)="onPageChanged($event)"
+          >
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-border"></div>
+
+  </div>
+</section>
+
+<!-- TEMPLATE NGX SPINNER-->
+<ngx-spinner bdColor = "rgba(0,0,0,0.3)" size = "medium" color = "#fff" type = "ball-scale-pulse" [fullScreen] = "true">
+  <p style="color: white" > Loading... </p>
+</ngx-spinner>
+

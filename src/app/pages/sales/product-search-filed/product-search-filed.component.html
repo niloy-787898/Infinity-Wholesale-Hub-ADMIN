@@ -1,0 +1,42 @@
+<div class="input-groupicon">
+  <mat-label>Product Name</mat-label>
+
+  <div class="search-area" (click)="onClickSearchArea($event)">
+    <form #searchForm="ngForm" class="from" style="width: 100%">
+      <mat-form-field appearance="outline" class="form-field">
+        <input
+          ngModel
+          type="text"
+          #searchInput
+          name="searchTerm"
+          matInput
+          (focus)="handleFocus($event)"
+          placeholder="Search with product name, code, model..."
+        />
+      </mat-form-field>
+    </form>
+    <!---suggesstion-area-->
+    <div
+      class="suggesstion-area"
+      [class]="searchProducts.length && isOpen ? 'active' : 'inactive'"
+    >
+      <ul
+        *ngFor="let data of searchProducts"
+        (click)="onSelectItem(data)"
+      >
+
+        <li>
+          <div class="suggesstion-left">
+            <div class="sug-product-name">
+              <h4>{{data.name}} ({{data?.model ? data?.model : ''}},{{data?.others ? data?.others+',' : ''}} {{data?.sku ? data?.sku : ''}})</h4>
+            </div>
+          </div>
+          <div class="sug-product-price">
+            <span>৳ {{data.salePrice | number : '' : 'bn'}}</span>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>

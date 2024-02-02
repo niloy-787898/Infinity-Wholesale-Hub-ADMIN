@@ -1,0 +1,149 @@
+<section class="add-list">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Create Sales Return</h4>
+      <h6>Add/Update Sales Return</h6>
+    </div>
+  </div>
+</section>
+
+<section class="from-section">
+  <form #formElement="ngForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()" class="area-border">
+    <div class="grid">
+      <div class="from form-1">
+        <div class="from">
+          <mat-label>Customer Name</mat-label>
+          <mat-form-field appearance="outline">
+            <!-- <mat-label>Choose Category</mat-label> -->
+            <mat-select formControlName="customer" matInput placeholder="Select Customer">
+              <mat-option *ngFor="let data of customers" [value]="data._id">
+                {{data.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="add-icon">
+          <a href="javascript:void(0);"><img src="../../../../assets/images/svg/plus1.svg" alt="img"></a>
+        </div>
+      </div>
+      <div class="from">
+        <mat-label>Sold Date</mat-label>
+        <mat-form-field appearance="outline">
+          <input formControlName="date" matInput [matDatepicker]="picker" placeholder="DD-MM-YYYY" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="from">
+        <mat-label>Reference No.</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="referenceNo" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="input-groupicon">
+      <mat-label>Product Name</mat-label>
+      <mat-form-field appearance="outline">
+        <!-- <mat-label>Name</mat-label> -->
+        <input formControlName="productName" matInput placeholder="Please type product code and select..." />
+      </mat-form-field>
+      <div class="addonset">
+        <img src="../../../../assets/images/svg/scanners.svg" alt="img">
+      </div>
+    </div>
+    <div class="container">
+      <div class="table-responsive">
+        <table>
+          <tr>
+            <!--            <th class="t-checkbox">-->
+            <!--              <mat-checkbox-->
+            <!--                #matCheckbox-->
+            <!--                (change)="onAllSelectChange($event)"-->
+            <!--              ></mat-checkbox>-->
+            <!--            </th>-->
+            <th>Product Name</th>
+            <th>QTY</th>
+            <th>Sales Price($)</th>
+            <th>Discount($)</th>
+            <th>Tax %</th>
+            <th>Tax Amount($)</th>
+            <th>Unit Cost($)</th>
+            <th>Total Cost ($)</th>
+            <!--            <td class="t-checkbox">-->
+            <!--              <mat-checkbox-->
+            <!--                class="t-mat-checkbox"-->
+            <!--                [(ngModel)]="data.select"-->
+            <!--                (ngModelChange)="onCheckChange($event, i, data._id)"-->
+            <!--              ></mat-checkbox>-->
+            <!--            </td>-->
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="table">
+      <table class="total-order">
+        <tr>
+          <td>Order Tax</td>
+          <td class="number-color">$ 0.00 (0.00%)</td>
+        </tr>
+        <tr>
+          <td>Discount</td>
+          <td class="number-color">$ 0.00</td>
+        </tr>
+        <tr>
+          <td>Shipping</td>
+          <td class="number-color">$ 0.00</td>
+        </tr>
+        <tr>
+          <td class="total">Grand Total</td>
+          <td class="number-color">$ 0.00</td>
+        </tr>
+      </table>
+    </div>
+    <div class="grid">
+      <div class="from">
+        <mat-label>Order Tax</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="orderTax" matInput />
+        </mat-form-field>
+      </div>
+      <div class="from">
+        <mat-label>Discount</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="discount" matInput />
+        </mat-form-field>
+      </div>
+      <div class="from">
+        <mat-label>Shipping</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="shipping" matInput />
+        </mat-form-field>
+      </div>
+      <div class="from">
+        <mat-label>Status</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Percentage</mat-label> -->
+          <mat-select formControlName="status" placeholder="Choose Status">
+            <mat-option value="Fruits">Fruits</mat-option>
+            <mat-option value="Vegetables">Vegetables</mat-option>
+            <mat-option value="Electronic">Electronic</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="from">
+      <mat-label>Description</mat-label>
+      <mat-form-field appearance="outline">
+        <textarea class="text-area" formControlName="description" matInput></textarea>
+      </mat-form-field>
+    </div>
+    <div class="btn">
+      <button mat-raised-button type="submit" class="btn-submit">{{id ? 'Update' : 'Submit'}} </button>
+      <button routerLink="/sales/sales-return-list" mat-raised-button class="btn-submit color">Cancel</button>
+    </div>
+  </form>
+</section>

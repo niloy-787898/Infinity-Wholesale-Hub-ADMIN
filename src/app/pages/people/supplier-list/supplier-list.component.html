@@ -1,0 +1,249 @@
+<section class="page-list">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Supplier List</h4>
+      <h6>Manage your Supplier</h6>
+    </div>
+    <div class="page-btn">
+      <a routerLink="/people/add-supplier" class="btn btn-added"><img src="../../../../assets/images/svg/plus.svg" alt="img" class="me-1"><span>Add Supplier</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="table-section">
+  <div class="mat-elevation-z8">
+    <div class="table-top">
+      <div class="search-set">
+        <div (click)="onToggle()" class="filter-show">
+          <a class="btn btn-filter">
+            <span *ngIf="!toggleMenu" class="material-symbols-outlined">filter_alt</span>
+            <a>
+              <a *ngIf="toggleMenu" class="close-button">
+                <span class="material-symbols-outlined">close</span>
+              </a>
+            </a>
+          </a>
+        </div>
+        <div class="search-input">
+          <a class="btn btn-searchset"
+          ><mat-icon class="mat-icons">search</mat-icon>
+          </a>
+          <form class="table-search" #searchForm="ngForm">
+            <input
+              type="search"
+              #searchInput
+              name="searchTerm"
+              autocomplete="off"
+              ngModel
+              placeholder="Search..."
+            />
+          </form>
+        </div>
+      </div>
+      <div class="wordset">
+        <ul>
+          <li>
+            <button
+              mat-icon-button
+              matTooltip="Export Excel"
+              aria-label="Example icon-button with a heart icon"
+              (click)="exportToAllExcel()"
+            >
+              <mat-icon class="material-symbols-outlined">download</mat-icon>
+            </button>
+          </li>
+          <li>
+            <button
+              mat-icon-button
+              matTooltip="Import Excel"
+              aria-label="Example icon-button with a heart icon"
+            >
+              <mat-icon class="material-symbols-outlined">upload</mat-icon>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="container filter-area"
+      [class]="toggleMenu ? 'filter-show' : 'filter-hide'"
+    >
+      <div>
+        <div class="filler">
+          <div class="date-filter">
+            <mat-form-field
+              class="mat-date-input-field"
+              appearance="outline"
+              (click)="picker.open()"
+            >
+              <mat-label class="filter-date">Filter Date</mat-label>
+              <mat-date-range-input
+                [formGroup]="dataFormDateRange"
+                [rangePicker]="picker"
+                [max]="today"
+              >
+                <input
+                  matStartDate
+                  formControlName="start"
+                  placeholder="Start date"
+                  readonly
+                />
+                <input
+                  matEndDate
+                  formControlName="end"
+                  placeholder="End date"
+                  readonly
+                  (dateChange)="endChangeRegDateRange($event)"
+                />
+              </mat-date-range-input>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+
+              <mat-error
+                *ngIf="
+                  dataFormDateRange.controls.start.hasError(
+                    'matStartDateInvalid'
+                  )
+                "
+              >Invalid start date
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  dataFormDateRange.controls.end.hasError('matEndDateInvalid')
+                "
+              >Invalid end date
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+      <div class="left ng-star-inserted">
+        <button
+          mat-stroked-button=""
+          color="accent"
+          class="mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        >
+          <span class="mat-button-wrapper">
+            <mat-icon
+              role="img"
+              class="mat-icon notranslate material-icons mat-icon-no-color"
+              aria-hidden="true"
+              data-mat-icon-type="font"
+            >close</mat-icon
+            >
+            Clear FilterData
+          </span>
+          <span matripple="" class="mat-ripple mat-button-ripple"></span>
+          <span class="mat-button-focus-overlay"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="button-area">
+      <div class="delete-area">
+        <button
+          *ngIf="checkDeletePermission"
+          mat-stroked-button
+          color="warn"
+          (click)="openConfirmDialog('delete')"
+          matTooltip="Delete"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="table-responsive">
+        <table>
+          <tr class="table-row">
+            <th class="t-checkbox">
+              <mat-checkbox
+                #matCheckbox
+                (change)="onAllSelectChange($event)"
+                class="mat-check"></mat-checkbox>
+            </th>
+            <th>ID</th>
+            <th>Supplier Name</th>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>email</th>
+            <th>Country</th>
+            <th>description</th>
+            <th>Action</th>
+          </tr>
+
+          <tr
+            *ngFor="let data of suppliers  | paginate: {
+              itemsPerPage: SupplierPerPage,
+              currentPage: currentPage,
+              totalItems: totalSupplier
+            };
+      let i = index"
+          >
+            <td class="t-checkbox">
+              <mat-checkbox
+                class="t-mat-checkbox"
+                [(ngModel)]="data.select"
+                (ngModelChange)="onCheckChange($event, i, data._id)"
+              ></mat-checkbox>
+            </td>
+            <td>{{ i + 1 }}</td>
+            <td>{{ data.image }}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.phone }}</td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.country }}</td>
+            <td>{{ data.description }}</td>
+            <td class="button">
+              <button
+                mat-mini-fab
+                color="accent"
+                [routerLink]="['../edit-customer/', data._id]"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <!-- <a (click)="deleteCategoryById(data._id)">
+                <img src="../../../../assets/images/svg/delete.svg" style="width: 25px;" alt="img">
+              </a> -->
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="prginator-area">
+      <div class="dataTables_length">
+        <label>
+          <span>Show per page:</span>
+          <select
+            class="custom-select"
+            (change)="onSelectShowPerPage(val.value)"
+            #val
+          >
+            <option *ngFor="let data of number">
+              {{ data.num }}
+            </option>
+          </select>
+        </label>
+      </div>
+      <div class="count-area">
+        <div class="pagination-container">
+          <pagination-controls
+            class="data-pagination"
+            [autoHide]="true"
+            [maxSize]="15"
+            (pageChange)="onPageChanged($event)"
+          >
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-border"></div>
+  </div>
+</section>

@@ -1,0 +1,22 @@
+@import "/src/theme/exports/_table-list.scss";
+
+
+.calculation {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 10px 15px;
+  .content {
+    width: 300px;
+    height: 180px;
+    background: #ffe4d9;
+    border-radius: 10px;
+  }
+}
+
+.hiddenInput{
+  display: none;
+}
+.button-style{
+  width: 120px;
+}

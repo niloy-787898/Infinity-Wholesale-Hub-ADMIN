@@ -1,0 +1,64 @@
+@import "/src/theme/exports/_add-from.scss";
+
+.input-groupicon {
+  position: relative;
+}
+
+.form-1 {
+  display: flex !important;
+  align-items: center;
+  gap: 5px;
+}
+
+.add-icon {
+  a {
+
+    width: 40px;
+    height: 40px;
+    background: #FF9F43;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    img {
+      width: 25px;
+    }
+
+    &:hover {
+      background: #212b36;
+    }
+  }
+}
+
+.csv-btn {
+  margin-bottom: 25px;
+
+  .btn-submit {
+    background: #FF9F43;
+    font-weight: 400;
+    padding: 7px 40px;
+
+    &:hover {
+      background: #fe820e;
+      color: #fff;
+    }
+  }
+}
+
+@media(max-width:1000px) {
+  .grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .form-1 {
+    display: grid !important;
+  }
+
+  .add-icon {
+    display: flex;
+    justify-content: center;
+  }
+}
+

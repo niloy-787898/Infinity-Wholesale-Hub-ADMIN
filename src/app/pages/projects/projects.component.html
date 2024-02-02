@@ -1,0 +1,50 @@
+<div class="action-multiple">
+  <button mat-raised-button color="primary" (click)="openProjectControllerDialog()">
+    <mat-icon>add</mat-icon> Add Project
+  </button>
+
+</div>
+
+<div class="line"></div>
+
+<main *ngIf="projects.length">
+
+  <div class="content">
+
+    <div class="card card-radius" *ngFor="let data of projects">
+
+      <div class="mid">
+        <div class="title">
+          <h2>{{data?.name}}</h2>
+        </div>
+        <div class="project">
+          <p>{{data?.note ? data?.note :  ''}}</p>
+        </div>
+      </div>
+
+      <div class="right-action gray">
+        <button mat-icon-button (click)="openProjectControllerDialog(data)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="openConfirmDialog(data._id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+    </div> <!-- END CARD -->
+
+  </div>
+
+</main>
+
+
+<app-no-content
+  *ngIf="!isLoading && !projects.length"
+  [matIcon]="'bookmark_added'"
+  [title]="'No Project Added Yet!'"
+  [desc]="'Please add your project for proper maintain your work schedule.'"
+></app-no-content>
+
+<ngx-spinner bdColor = "rgba(0,0,0,0.3)" size = "medium" color = "#fff" type = "ball-scale-pulse" [fullScreen] = "true">
+  <p style="color: white" > Loading... </p>
+</ngx-spinner>

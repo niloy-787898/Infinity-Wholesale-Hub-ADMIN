@@ -1,0 +1,11 @@
+@import "/src/theme/exports/_add-from.scss";
+
+.quantity-row {
+  display: flex;
+
+  gap: 16px;
+}
+
+.from-qty {
+  width: 155px;
+}

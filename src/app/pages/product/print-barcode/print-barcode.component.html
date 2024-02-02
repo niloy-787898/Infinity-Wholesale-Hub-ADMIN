@@ -1,0 +1,52 @@
+<section class="add-list">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Print Barcode</h4>
+      <h6>Print product barcodes</h6>
+    </div>
+  </div>
+</section>
+
+<section class="print-barcode-section">
+  <div class="area-border">
+    <div class="print-barcode-content">
+      <h4>The field labels marked with * are required input fields.</h4>
+    </div>
+    <form #formElement="ngForm" [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+      <div class="input-groupicon">
+        <mat-label>Product Name</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input formControlName="productName"  matInput placeholder="Please type product code and select..." />
+        </mat-form-field>
+        <div class="addonset">
+          <img src="../../../../assets/images/svg/scanners.svg" alt="img">
+        </div>
+      </div>
+    </form>
+      <div class="table-responsive">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Qty</th>
+          </tr>
+        </table>
+    </div>
+    <div class="prginator-area">
+      <div class="dataTables_length" id="DataTables_Table_0_length">
+        <label>
+          <h6>Paper Size</h6>
+          <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="custom-select">
+            <option value="36mm (1.4 inch)">36mm (1.4 inch)</option>
+            <option value="12mm (1 inch)">12mm (1 inch)</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="btn">
+      <button mat-raised-button type="submit" class="btn-submit">Submit</button>
+      <button mat-raised-button type="submit" class="btn-submit color">Cancel</button>
+    </div>
+  </div>
+</section>

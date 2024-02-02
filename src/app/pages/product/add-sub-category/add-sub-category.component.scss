@@ -1,0 +1,13 @@
+@import "/src/theme/exports/_add-from.scss";
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media(max-width:700px) {
+  .grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

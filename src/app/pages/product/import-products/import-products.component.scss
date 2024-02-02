@@ -1,0 +1,155 @@
+@import "/src/theme/_base.scss";
+
+.add-list {
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    margin-bottom: 20px;
+
+    .page-title {
+
+      h4 {
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        color: #212b36;
+        font-size: 18px;
+        line-height: 0;
+      }
+
+      h6 {
+        font-family: "Nunito", sans-serif;
+        font-size: 14px;
+        color: #555;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.area-border {
+  border: 1px solid rgba(145, 158, 171, 0.32);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+
+
+.csv-format {
+  h4 {
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    color: #637381;
+  }
+
+  .csv-btn {
+    margin-bottom: 25px;
+
+    .btn-submit {
+      background: #FF9F43;
+      font-weight: 400;
+      padding: 7px 40px;
+
+      &:hover {
+        background: #fe820e;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.image-upload {
+  border: 1px solid rgba(145, 158, 171, 0.32);
+  margin-top: 10px;
+  position: relative;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+
+  input[type=file] {
+    width: 100%;
+    opacity: 0;
+    height: 100px;
+    position: relative;
+    z-index: 9;
+    cursor: pointer;
+  }
+
+  .image-uploads {
+    width: 100%;
+    padding: 20px 0;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:hover {
+    background-color: rgb(245, 245, 245);
+  }
+
+  img {
+    width: 40px;
+  }
+}
+
+.btn-submit {
+  min-width: 120px;
+  background: #FF9F43;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 7px 15px;
+  transition: all 0.2s ease;
+  margin-right: 10px;
+
+  &:hover {
+    background: #fe820e;
+    color: #fff;
+  }
+}
+
+.color {
+  background: #637381 !important;
+
+  &:hover {
+    background: #424b52 !important;
+    color: #fff !important;
+  }
+}
+
+.table {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 35px;
+  margin-bottom: 25px;
+}
+
+.customers {
+  font-family: "Nunito", sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+.customers tr, td {
+  color: #212B36;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  width: 50%;
+
+
+}
+
+@media(max-width:1000px) {
+
+  .table {
+    grid-template-columns: 1fr;
+
+  }
+}
