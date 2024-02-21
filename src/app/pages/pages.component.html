@@ -1,7 +1,11 @@
 <div class="header-area">
   <div class="header-main">
     <div class="logo" routerLink="/">
-      <img src="assets/brand/DM%20Virtical%20trans.png" style="width: 50px" alt="">
+      <img
+        src="assets/brand/DM%20Virtical%20trans.png"
+        style="width: 50px"
+        alt=""
+      />
     </div>
     <div class="menu-bar">
       <span (click)="sideNavToggle()" class="material-icons">menu</span>
@@ -10,14 +14,20 @@
 </div>
 
 <div class="dashboard-page-render">
-  <div class="page-render-area-main" [ngClass]="{ 'p-100px': sideNav == false }">
+  <div
+    class="page-render-area-main"
+    [ngClass]="{ 'p-100px': sideNav == false }"
+  >
     <!---side-nav-->
-    <div class="side-nav" [ngClass]="{ 'w-100px side-nav-active': sideNav == false }">
+    <div
+      class="side-nav"
+      [ngClass]="{ 'w-100px side-nav-active': sideNav == false }"
+    >
       <div class="side-nav-main" [ngClass]="{ scroll: sideNav == true }">
         <!---sidenav-top-->
         <div class="side-nav-top" [class]="sideNav ? '' : 'al-center'">
           <div class="logo" [class]="sideNav ? 's' : 'logo-hide'">
-            <img src="/assets/brand/Dm%20Logo%20color%20teans.png" alt="">
+            <img src="/assets/brand/Dm%20Logo%20color%20teans.png" alt="" />
           </div>
           <div class="menu-bar">
             <span (click)="sideNavToggle()" class="material-icons">menu</span>
@@ -28,72 +38,98 @@
         <div class="menu">
           <ul>
             <li>
-              <div class="menu-item" #dashboard style="margin-left: 0px" (click)="subMenuToggle(0)"
-                routerLinkActive="link-active">
-                <a routerLink="dashboard" (click)="windowWidth < 1200? sideNavToggle():''">
+              <div
+                class="menu-item"
+                #dashboard
+                style="margin-left: 0px"
+                (click)="subMenuToggle(0)"
+                routerLinkActive="link-active"
+              >
+                <a
+                  routerLink="dashboard"
+                  (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                >
                   <span class="material-icons icon">space_dashboard</span>
-                  <span [class]="sideNav ? 'menu-show' : 'menu-hide'">Dashboard</span>
+                  <span [class]="sideNav ? 'menu-show' : 'menu-hide'"
+                    >Dashboard</span
+                  >
                 </a>
               </div>
             </li>
 
-            <li *ngIf="USER_ROLE==='super_admin'">
-              <div class="menu-item" (click)="subMenuToggle(1)" [class]="subId == 1 ? 'link-active' : ''" >
+            <li *ngIf="USER_ROLE === 'super_admin'">
+              <div
+                class="menu-item"
+                (click)="subMenuToggle(1)"
+                [class]="subId == 1 ? 'link-active' : ''"
+              >
                 <a>
-                  <span><img src="assets/images/svg/product.svg" class="icon" /></span>
+                  <span
+                    ><img src="assets/images/svg/product.svg" class="icon"
+                  /></span>
 
-                  <span [class]="sideNav ? 'menu-show' : 'menu-hide isParentMenu'">Inventory
+                  <span
+                    [class]="sideNav ? 'menu-show' : 'menu-hide isParentMenu'"
+                    >Inventory
                   </span>
                 </a>
-                <span *ngIf="
+                <span
+                  *ngIf="
                     (windowWidth > 1200 && sideNav == true) ||
                     (windowWidth < 1200 && sideNav == false)
-                  "><i [class]="subId == 1 ? 'fa fa-angle-up' : 'fa fa-angle-down'"></i></span>
+                  "
+                  ><i
+                    [class]="subId == 1 ? 'fa fa-angle-up' : 'fa fa-angle-down'"
+                  ></i
+                ></span>
               </div>
-              <div class="sub-menu" [class]="
+              <div
+                class="sub-menu"
+                [class]="
                   (windowWidth >= 1200 &&
                     ((subId == 1 && sideNav == true) || sideRes == true)) ||
                   (windowWidth < 1200 && subId == 1 && sideNav == false)
                     ? 'show-sub'
                     : 'hide-sub'
-                ">
+                "
+              >
                 <ul>
                   <li class="hover-title"><a>Inventory</a></li>
                   <li routerLinkActive="sub-link-active">
-                    <a routerLink="product/product-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Product List</a>
+                    <a
+                      routerLink="product/product-list"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >Product List</a
+                    >
                   </li>
                   <li routerLinkActive="sub-link-active">
-                    <a routerLink="product/add-product" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Add Product</a>
+                    <a
+                      routerLink="product/purchase-history"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                    >
+                      <span class="material-symbols-outlined">
+                        arrow_right </span
+                      >Purchase History</a
+                    >
                   </li>
-                  <li routerLinkActive="sub-link-active">
-                    <a routerLink="product/purchase-history" (click)="windowWidth < 1200? sideNavToggle():''"> <span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Purchase History</a>
-                  </li>
-                  <li routerLinkActive="sub-link-active">
-                    <a routerLink="product/category-list" (click)="windowWidth < 1200? sideNavToggle():''"> <span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Category</a>
-                  </li>
-<!--                  <li routerLinkActive="sub-link-active">-->
-<!--                    <a routerLink="product/sub-category-list" (click)="windowWidth < 1200? sideNavToggle():''"> <span class="material-symbols-outlined">-->
-<!--                        arrow_right-->
-<!--                      </span>Sub Category</a>-->
-<!--                  </li>-->
-<!--                  <li routerLinkActive="sub-link-active">-->
-<!--                    <a routerLink="product/brand-list" (click)="windowWidth < 1200? sideNavToggle():''"> <span class="material-symbols-outlined">-->
-<!--                        arrow_right-->
-<!--                      </span>Brand</a>-->
-<!--                  </li>-->
-<!--                  <li routerLinkActive="sub-link-active">-->
-<!--                    <a routerLink="product/unit-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">-->
-<!--                        arrow_right-->
-<!--                      </span>Unit</a>-->
-<!--                  </li>-->
+
+                  <!--                  <li routerLinkActive="sub-link-active">-->
+                  <!--                    <a routerLink="product/sub-category-list" (click)="windowWidth < 1200? sideNavToggle():''"> <span class="material-symbols-outlined">-->
+                  <!--                        arrow_right-->
+                  <!--                      </span>Sub Category</a>-->
+                  <!--                  </li>-->
+                  <!--                  <li routerLinkActive="sub-link-active">-->
+                  <!--                    <a routerLink="product/brand-list" (click)="windowWidth < 1200? sideNavToggle():''"> <span class="material-symbols-outlined">-->
+                  <!--                        arrow_right-->
+                  <!--                      </span>Brand</a>-->
+                  <!--                  </li>-->
+                  <!--                  <li routerLinkActive="sub-link-active">-->
+                  <!--                    <a routerLink="product/unit-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">-->
+                  <!--                        arrow_right-->
+                  <!--                      </span>Unit</a>-->
+                  <!--                  </li>-->
                   <!--                      <li routerLinkActive="link-active"><a routerLink="product/import-products">Import Product</a></li>-->
                   <!--                      <li routerLinkActive="link-active"><a routerLink="product/print-barcode">Print Barcode</a></li>-->
                 </ul>
@@ -101,193 +137,171 @@
             </li>
 
             <li>
-              <div class="menu-item" (click)="subMenuToggle(2)" [class]="subId == 2 ? 'link-active' : ''">
+              <div
+                class="menu-item"
+                (click)="subMenuToggle(2)"
+                [class]="subId == 2 ? 'link-active' : ''"
+              >
                 <a>
-                  <span><img src="assets/images/svg/sales1.svg" class="icon" /></span>
-                  <span [class]="sideNav ? 'menu-show' : 'menu-hide isParentMenu'">Sales
+                  <span
+                    ><img src="assets/images/svg/sales1.svg" class="icon"
+                  /></span>
+                  <span
+                    [class]="sideNav ? 'menu-show' : 'menu-hide isParentMenu'"
+                    >Sales
                   </span>
                 </a>
-                <span *ngIf="
+                <span
+                  *ngIf="
                     (windowWidth > 1200 && sideNav == true) ||
                     (windowWidth < 1200 && sideNav == false)
-                  "><i [class]="subId == 2 ? 'fa fa-angle-up' : 'fa fa-angle-down'"></i></span>
+                  "
+                  ><i
+                    [class]="subId == 2 ? 'fa fa-angle-up' : 'fa fa-angle-down'"
+                  ></i
+                ></span>
               </div>
-              <div class="sub-menu" [class]="
+              <div
+                class="sub-menu"
+                [class]="
                   (windowWidth >= 1200 &&
                     ((subId == 2 && sideNav == true) || sideRes == true)) ||
                   (windowWidth < 1200 && subId == 2 && sideNav == false)
                     ? 'show-sub'
                     : 'hide-sub'
-                ">
+                "
+              >
                 <ul>
                   <li class="hover-title"><a>Sales</a></li>
                   <li routerLinkActive="sub-link-active">
-                    <a routerLink="sales/new-sales" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Add New Sales</a>
+                    <a
+                      routerLink="sales/new-sales"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >Add New Sales</a
+                    >
                   </li>
-                  <li routerLinkActive="sub-link-active" *ngIf="USER_ROLE==='super_admin'">
-                    <a routerLink="sales/sales-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Sales Report</a>
+                  <li
+                    routerLinkActive="sub-link-active"
+                    *ngIf="USER_ROLE === 'super_admin'"
+                  >
+                    <a
+                      routerLink="sales/sales-list"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >Sales Report</a
+                    >
                   </li>
 
-                  <li routerLinkActive="sub-link-active" *ngIf="USER_ROLE==='salesman'">
-                    <a routerLink="sales/my-sales-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>My Sales Report</a>
+                  <li
+                    routerLinkActive="sub-link-active"
+                    *ngIf="USER_ROLE === 'salesman'"
+                  >
+                    <a
+                      routerLink="sales/my-sales-list"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >My Sales Report</a
+                    >
                   </li>
 
-                  <li routerLinkActive="sub-link-active" *ngIf="USER_ROLE==='super_admin'">
-                    <a routerLink="sales/return-sales" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Sales Return Report</a>
-                  </li>
-                  <li routerLinkActive="sub-link-active" *ngIf="USER_ROLE==='super_admin'">
-                    <a routerLink="sales/pre-order" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Pre Order</a>
-                  </li>
-                  <li routerLinkActive="sub-link-active" *ngIf="USER_ROLE==='super_admin'">
-                    <a routerLink="sales/pre-order-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Pre Order List</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-
-            <li *ngIf="USER_ROLE==='super_admin'">
-              <div class="menu-item" (click)="subMenuToggle(3)" [class]="subId == 3 ? 'link-active' : ''">
-                <a>
-                  <span><img src="assets/images/svg/purchase1.svg" class="icon" /></span>
-                  <span [class]="sideNav ? 'menu-show' : 'menu-hide isParentMenu'">Vendor
-                  </span>
-                </a>
-                <span *ngIf="
-                    (windowWidth > 1200 && sideNav == true) ||
-                    (windowWidth < 1200 && sideNav == false)
-                  "><i [class]="subId == 3 ? 'fa fa-angle-up' : 'fa fa-angle-down'"></i></span>
-              </div>
-              <div class="sub-menu" [class]="
-                  (windowWidth >= 1200 &&
-                    ((subId == 3 && sideNav == true) || sideRes == true)) ||
-                  (windowWidth < 1200 && subId == 3 && sideNav == false)
-                    ? 'show-sub'
-                    : 'hide-sub'
-                ">
-                <ul>
-                  <li class="hover-title"><a>Vendor</a></li>
-                  <li routerLinkActive="sub-link-active">
-                    <a routerLink="purchase/vendor-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Vendor List</a>
-                  </li>
-                  <li routerLinkActive="sub-link-active">
-                    <a routerLink="purchase/vendor-transition-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Vendor Transaction</a>
-                  </li>
-                  <!-- <li routerLinkActive="sub-link-active">
-                    <a routerLink="purchase/vendor-expense-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Vendor Expense List</a>
+                  <!-- <li
+                    routerLinkActive="sub-link-active"
+                    *ngIf="USER_ROLE === 'super_admin'"
+                  >
+                    <a
+                      routerLink="sales/return-sales"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >Sales Return Report</a
+                    >
                   </li> -->
-<!--                  <li routerLinkActive="sub-link-active">-->
-<!--                    <a routerLink="purchase/add-purchase" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">-->
-<!--                        arrow_right-->
-<!--                      </span>Add Purchase</a>-->
-<!--                  </li>-->
-<!--                  <li routerLinkActive="sub-link-active">-->
-<!--                    <a routerLink="purchase/purchase-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">-->
-<!--                        arrow_right-->
-<!--                      </span>Purchase Report</a>-->
-<!--                  </li>-->
-<!--                  <li routerLinkActive="sub-link-active">-->
-<!--                    <a routerLink="purchase/import-purchase" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">-->
-<!--                        arrow_right-->
-<!--                      </span>Import Purchase</a>-->
-<!--                  </li>-->
-<!--                  <li routerLinkActive="sub-link-active">-->
-<!--                    <a routerLink="product/print-barcode" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">-->
-<!--                        arrow_right-->
-<!--                      </span>Print Barcode</a>-->
-<!--                  </li>-->
+                  <li
+                    routerLinkActive="sub-link-active"
+                    *ngIf="USER_ROLE === 'super_admin'"
+                  >
+                    <a
+                      routerLink="sales/pre-order"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >Order</a
+                    >
+                  </li>
+                  <li
+                    routerLinkActive="sub-link-active"
+                    *ngIf="USER_ROLE === 'super_admin'"
+                  >
+                    <a
+                      routerLink="sales/pre-order-list"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >Order List</a
+                    >
+                  </li>
                 </ul>
               </div>
             </li>
 
-            <li *ngIf="USER_ROLE==='super_admin'">
-              <div class="menu-item" (click)="subMenuToggle(4)" [class]="subId == 4 ? 'link-active' : ''">
+            <li *ngIf="USER_ROLE === 'super_admin'">
+              <div
+                class="menu-item"
+                (click)="subMenuToggle(5)"
+                [class]="subId == 5 ? 'link-active' : ''"
+              >
                 <a>
-                  <span><img src="assets/images/svg/expense1.svg" class="icon" /></span>
-                  <span [class]="sideNav ? 'menu-show' : 'menu-hide isParentMenu'">Expense
+                  <span
+                    ><img src="assets/images/svg/users1.svg" class="icon"
+                  /></span>
+                  <span
+                    [class]="sideNav ? 'menu-show' : 'menu-hide isParentMenu'"
+                    >Customer
                   </span>
                 </a>
-                <span *ngIf="
+                <span
+                  *ngIf="
                     (windowWidth > 1200 && sideNav == true) ||
                     (windowWidth < 1200 && sideNav == false)
-                  "><i [class]="subId == 4 ? 'fa fa-angle-up' : 'fa fa-angle-down'"></i></span>
+                  "
+                  ><i
+                    [class]="subId == 5 ? 'fa fa-angle-up' : 'fa fa-angle-down'"
+                  ></i
+                ></span>
               </div>
-              <div class="sub-menu" [class]="
-                  (windowWidth >= 1200 &&
-                    ((subId == 4 && sideNav == true) || sideRes == true)) ||
-                  (windowWidth < 1200 && subId == 4 && sideNav == false)
-                    ? 'show-sub'
-                    : 'hide-sub'
-                ">
-                <ul>
-                  <li class="hover-title"><a>Expense</a></li>
-                  <li routerLinkActive="sub-link-active">
-                    <a routerLink="expense/add-expense" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Add Expense</a>
-                  </li>
-                  <li routerLinkActive="sub-link-active">
-                    <a routerLink="expense/expense-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Expense List</a>
-                  </li>
-
-<!--                  <li routerLinkActive="sub-link-active">-->
-<!--                    <a routerLink="expense/expense-category" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">-->
-<!--                        arrow_right-->
-<!--                      </span>Expense Category</a>-->
-<!--                  </li>-->
-                </ul>
-              </div>
-            </li>
-
-            <li *ngIf="USER_ROLE==='super_admin'">
-              <div class="menu-item" (click)="subMenuToggle(5)" [class]="subId == 5 ? 'link-active' : ''">
-                <a>
-                  <span><img src="assets/images/svg/users1.svg" class="icon" /></span>
-                  <span [class]="sideNav ? 'menu-show' : 'menu-hide isParentMenu'">Customer
-                  </span>
-                </a>
-                <span *ngIf="
-                    (windowWidth > 1200 && sideNav == true) ||
-                    (windowWidth < 1200 && sideNav == false)
-                  "><i [class]="subId == 5 ? 'fa fa-angle-up' : 'fa fa-angle-down'"></i></span>
-              </div>
-              <div class="sub-menu" [class]="
+              <div
+                class="sub-menu"
+                [class]="
                   (windowWidth >= 1200 &&
                     ((subId == 5 && sideNav == true) || sideRes == true)) ||
                   (windowWidth < 1200 && subId == 5 && sideNav == false)
                     ? 'show-sub'
                     : 'hide-sub'
-                ">
+                "
+              >
                 <ul>
                   <li class="hover-title"><a>Customer</a></li>
                   <li routerLinkActive="sub-link-active">
-                    <a routerLink="people/customer-list" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Customer List</a>
+                    <a
+                      routerLink="people/customer-list"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >Customer List</a
+                    >
                   </li>
                   <li routerLinkActive="sub-link-active">
-                    <a routerLink="people/add-customer" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Add Customer</a>
+                    <a
+                      routerLink="people/add-customer"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >Add Customer</a
+                    >
                   </li>
                   <!--                  <li routerLinkActive="sub-link-active">-->
                   <!--                    <a routerLink="people/supplier-list"><span class="material-symbols-outlined">arrow_right-->
@@ -302,31 +316,51 @@
               </div>
             </li>
 
-            <li *ngIf="USER_ROLE==='super_admin'">
-              <div class="menu-item" (click)="subMenuToggle(6)" [class]="subId == 5 ? 'link-active' : ''">
+            <li *ngIf="USER_ROLE === 'super_admin'">
+              <div
+                class="menu-item"
+                (click)="subMenuToggle(6)"
+                [class]="subId == 5 ? 'link-active' : ''"
+              >
                 <a>
-                  <span><img src="assets/images/svg/users1.svg" class="icon" /></span>
-                  <span [class]="sideNav ? 'menu-show' : 'menu-hide isParentMenu'">User
+                  <span
+                    ><img src="assets/images/svg/users1.svg" class="icon"
+                  /></span>
+                  <span
+                    [class]="sideNav ? 'menu-show' : 'menu-hide isParentMenu'"
+                    >User
                   </span>
                 </a>
-                <span *ngIf="
+                <span
+                  *ngIf="
                     (windowWidth > 1200 && sideNav == true) ||
                     (windowWidth < 1200 && sideNav == false)
-                  "><i [class]="subId == 6 ? 'fa fa-angle-up' : 'fa fa-angle-down'"></i></span>
+                  "
+                  ><i
+                    [class]="subId == 6 ? 'fa fa-angle-up' : 'fa fa-angle-down'"
+                  ></i
+                ></span>
               </div>
-              <div class="sub-menu" [class]="
+              <div
+                class="sub-menu"
+                [class]="
                   (windowWidth >= 1200 &&
                     ((subId == 6 && sideNav == true) || sideRes == true)) ||
                   (windowWidth < 1200 && subId == 6 && sideNav == false)
                     ? 'show-sub'
                     : 'hide-sub'
-                ">
+                "
+              >
                 <ul>
                   <li class="hover-title"><a>User</a></li>
                   <li routerLinkActive="sub-link-active">
-                    <a routerLink="admin-control/all-admins" (click)="windowWidth < 1200? sideNavToggle():''"><span class="material-symbols-outlined">
-                        arrow_right
-                      </span>Admin Controls</a>
+                    <a
+                      routerLink="admin-control/all-admins"
+                      (click)="windowWidth < 1200 ? sideNavToggle() : ''"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >Admin Controls</a
+                    >
                   </li>
                 </ul>
               </div>
@@ -336,7 +370,9 @@
               <div class="menu-item" style="margin-left: 0px">
                 <a (click)="onLogout()">
                   <span class="material-icons icon">logout</span>
-                  <span [class]="sideNav ? 'menu-show' : 'menu-hide'">Logout</span>
+                  <span [class]="sideNav ? 'menu-show' : 'menu-hide'"
+                    >Logout</span
+                  >
                 </a>
               </div>
             </li>

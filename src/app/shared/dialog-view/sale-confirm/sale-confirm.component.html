@@ -16,7 +16,7 @@
   </div> <!-- END Input Form Header -->
 
 
-  <div class="main">
+  <div class="main" id="printSection">
     <div class="customer-info" *ngIf="data?.customer">
       <h5>Customer Info:</h5>
       <div class="line"></div>
@@ -24,9 +24,11 @@
     </div>
 
 
-    <div class="table-responsive">
+    <div class="table-responsive" >
       <table>
         <tr class="table-row">
+
+          <th>Product Image</th>
           <th>Product Name</th>
           <th>QTY</th>
           <th>Price</th>
@@ -55,17 +57,20 @@
       </div>
     </div>
 
-    <div class="button-area">
-      <button mat-raised-button color="primary" (click)="onClose('print')" type="button">
-        <mat-icon>print</mat-icon>
-        Confirm & Print
-      </button>
-      <button mat-raised-button color="accent" (click)="onClose('confirm')" type="button">
-        <mat-icon>done</mat-icon>
-        Confirm
-      </button>
-    </div>
 
   </div>
 
+  <div class="button-area">
+    <button mat-raised-button color="primary" (click)="printSection('printSection')" type="button">
+      <mat-icon>print</mat-icon>
+      Confirm & Print
+    </button>
+    <button mat-raised-button color="accent" (click)="onClose('confirm')" type="button">
+      <mat-icon>done</mat-icon>
+      Confirm
+    </button>
+  </div>
+
+
 </div>
+

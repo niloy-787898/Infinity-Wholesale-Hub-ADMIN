@@ -88,7 +88,7 @@ export class SalesListMonthComponent implements OnInit {
   });
 
   // Static Data
-  months: Select[] = MONTHS
+  months: Select[] = MONTHS;
 
   // FilterData
   filter: any = null;
@@ -115,7 +115,7 @@ export class SalesListMonthComponent implements OnInit {
     private dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private activatedRoute: ActivatedRoute,
-    private salesmanDataService: AdminDataService,
+    private salesmanDataService: AdminDataService
   ) {
     (window as any).pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
@@ -141,9 +141,7 @@ export class SalesListMonthComponent implements OnInit {
       const startDate = this.utilsService.getDateString(
         new Date(new Date().getFullYear(), new Date().getMonth(), 1)
       );
-      const endDate = this.utilsService.getDateString(
-        new Date()
-      );
+      const endDate = this.utilsService.getDateString(new Date());
 
       const qData = { soldDateString: { $gte: startDate, $lte: endDate } };
       this.filter = { ...this.filter, ...qData };
@@ -155,7 +153,6 @@ export class SalesListMonthComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-
     const formValue = this.searchForm.valueChanges;
     this.subForm = formValue
       .pipe(
@@ -165,7 +162,6 @@ export class SalesListMonthComponent implements OnInit {
         debounceTime(200),
         distinctUntilChanged(),
         switchMap((data) => {
-
           this.searchQuery = data;
           if (this.searchQuery === '' || this.searchQuery === null) {
             this.searchProducts = [];
@@ -174,21 +170,19 @@ export class SalesListMonthComponent implements OnInit {
             // this.salesCalculation = this.holdTotalSalesCalculation;
             this.searchQuery = null;
             return EMPTY;
-          }else{
-
+          } else {
             this.dataFormDateRange.reset();
-            if(this.filter.soldDateString){
+            if (this.filter.soldDateString) {
               delete this.filter.soldDateString;
             }
 
-            if(this.filter.month){
+            if (this.filter.month) {
               delete this.filter.month;
             }
-            if(this.filter.year){
+            if (this.filter.year) {
               delete this.filter.year;
             }
             this.activeFilter5 = null;
-
           }
           const pagination: Pagination = {
             pageSize: Number(this.salesPerPage),
@@ -202,7 +196,7 @@ export class SalesListMonthComponent implements OnInit {
             customer: 1,
             salesman: 1,
             status: 1,
-            month:1,
+            month: 1,
             soldDate: 1,
             total: 1,
             soldDateString: 1,
@@ -213,7 +207,7 @@ export class SalesListMonthComponent implements OnInit {
 
           const filterData: FilterData = {
             pagination: pagination,
-            filter: { 'month': new Date().getMonth() },
+            filter: { month: new Date().getMonth() },
             select: mSelect,
             sort: { createdAt: -1 },
           };
@@ -226,7 +220,10 @@ export class SalesListMonthComponent implements OnInit {
       )
       .subscribe({
         next: (res) => {
-          this.searchProducts = this.newSalesService.newSalesGroupByField(res.data, 'soldDateString');
+          this.searchProducts = this.newSalesService.newSalesGroupByField(
+            res.data,
+            'soldDateString'
+          );
           this.sales = this.searchProducts;
           this.totalSales = res.count;
           this.totalSalesStore = res.count;
@@ -270,7 +267,7 @@ export class SalesListMonthComponent implements OnInit {
     // Spinner..
     this.spinner.show();
     const filter: FilterData = {
-      filter: {...this.filter},
+      filter: { ...this.filter },
       pagination: null,
       select: {
         invoiceNo: 1,
@@ -278,7 +275,7 @@ export class SalesListMonthComponent implements OnInit {
         customer: 1,
         salesman: 1,
         status: 1,
-        month:1,
+        month: 1,
         soldDate: 1,
         total: 1,
         soldDateString: 1,
@@ -295,7 +292,10 @@ export class SalesListMonthComponent implements OnInit {
         next: (res) => {
           // console.log(res)
           if (res.success) {
-            this.sales = this.newSalesService.newSalesGroupByField(res.data, 'soldDateString');
+            this.sales = this.newSalesService.newSalesGroupByField(
+              res.data,
+              'soldDateString'
+            );
             // for (let i=0 ; i<this.sales.length; i ++){
             //   console.log(this.getSum(this.sales[i].data));
             // }
@@ -400,14 +400,16 @@ export class SalesListMonthComponent implements OnInit {
       sort: { name: 1 },
     };
 
-    this.subDataSeven = this.salesmanDataService.getAllAdmins(filterData, null).subscribe({
-      next: (res) => {
-        this.salesmans = res.data;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    this.subDataSeven = this.salesmanDataService
+      .getAllAdmins(filterData, null)
+      .subscribe({
+        next: (res) => {
+          this.salesmans = res.data;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 
   public onPageChanged(event: any) {
@@ -509,7 +511,7 @@ export class SalesListMonthComponent implements OnInit {
     //   month: month,
     //     year: year,
     // }}
-    this.activeFilter5 = this.months.findIndex(f => f.value === month);
+    this.activeFilter5 = this.months.findIndex((f) => f.value === month);
     // this.activeFilter2 = this.years.findIndex(f => f.value === year);
   }
 
@@ -527,10 +529,13 @@ export class SalesListMonthComponent implements OnInit {
       }
       case 'month': {
         this.dataFormDateRange.reset();
-        if(this.filter.soldDateString){
+        if (this.filter.soldDateString) {
           delete this.filter.soldDateString;
         }
-        this.filter = { ...this.filter, ...{ 'month': value-1,'year': new Date().getFullYear() } };
+        this.filter = {
+          ...this.filter,
+          ...{ month: value - 1, year: new Date().getFullYear() },
+        };
         this.activeFilter5 = index;
         break;
       }
@@ -547,10 +552,10 @@ export class SalesListMonthComponent implements OnInit {
   }
 
   endChangeRegDateRange(event: MatDatepickerInputEvent<any>) {
-    if(this.filter.month){
+    if (this.filter.month) {
       delete this.filter.month;
     }
-    if(this.filter.year){
+    if (this.filter.year) {
       delete this.filter.year;
     }
     this.activeFilter5 = null;
@@ -728,18 +733,23 @@ export class SalesListMonthComponent implements OnInit {
   async downloadPdfInvoice(type?: string, m?: NewSales) {
     console.log('m----------', m);
 
-    const documentDefinition = await this.getInvoiceDocument(m);
+    try {
+      const documentDefinition = await this.getInvoiceDocument(m);
 
-    if (type === 'download') {
-      pdfMake
-        .createPdf(documentDefinition)
-        .download(`Invoice_${m?.invoiceNo}.pdf`);
-    } else if (type === 'print') {
-      pdfMake.createPdf(documentDefinition).print();
-    } else {
-      pdfMake
-        .createPdf(documentDefinition)
-        .download(`Invoice_${m?.invoiceNo}.pdf`);
+      if (type === 'download') {
+        pdfMake
+          .createPdf(documentDefinition)
+          .download(`Invoice_${m?.invoiceNo}.pdf`);
+      } else if (type === 'print') {
+        pdfMake.createPdf(documentDefinition).print();
+      } else {
+        pdfMake
+          .createPdf(documentDefinition)
+          .download(`Invoice_${m?.invoiceNo}.pdf`);
+      }
+    } catch (error) {
+      console.error('Error creating PDF:', error);
+      // Handle the error here, such as displaying an error message to the user
     }
   }
 
@@ -1221,12 +1231,10 @@ export class SalesListMonthComponent implements OnInit {
     };
   }
 
-
   // calculation funciton
 
-
   getSum(items): number {
-    console.log("items",items)
+    console.log('items', items);
     let sum = 0;
     for (let i = 0; i < items.length; i++) {
       sum += items[i].total;
@@ -1243,6 +1251,8 @@ export class SalesListMonthComponent implements OnInit {
     this.toggleMenu = !this.toggleMenu;
   }
 
+
+
   /**
    * ON DESTROY
    */
@@ -1256,4 +1266,6 @@ export class SalesListMonthComponent implements OnInit {
       this.subDataTwo.unsubscribe();
     }
   }
+
+
 }

@@ -4,7 +4,7 @@ import {environment} from '../../../environments/environment';
 import {UtilsService} from '../core/utils.service';
 import {ImageUploadResponse, ResponsePayload} from '../../interfaces/core/response-payload.interface';
 
-const API_UPLOAD = environment.ftpBaseLink + '/api/upload/';
+const API_UPLOAD = environment.apiBaseLink + '/api/upload/';
 
 @Injectable({
   providedIn: 'root'

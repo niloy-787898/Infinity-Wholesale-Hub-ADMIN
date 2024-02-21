@@ -4,12 +4,12 @@
       <h4>Full Month Sales List</h4>
       <h6>Manage your sales</h6>
     </div>
-<!--    <div class="page-btn">-->
-<!--      <a routerLink="/sales/new-sales" class="btn btn-added">-->
-<!--        <img src="/assets/images/svg/plus.svg" alt="img" />-->
-<!--        <span>Add Sales</span>-->
-<!--      </a>-->
-<!--    </div>-->
+    <!--    <div class="page-btn">-->
+    <!--      <a routerLink="/sales/new-sales" class="btn btn-added">-->
+    <!--        <img src="/assets/images/svg/plus.svg" alt="img" />-->
+    <!--        <span>Add Sales</span>-->
+    <!--      </a>-->
+    <!--    </div>-->
   </div>
 </section>
 
@@ -18,16 +18,16 @@
     <div class="table-top">
       <div class="search-set">
         <div (click)="onToggle()" class="filter-show">
-<!--          <a class="btn btn-filter">-->
-<!--            <span *ngIf="!toggleMenu" class="material-symbols-outlined"-->
-<!--              >filter_alt</span-->
-<!--            >-->
-<!--            <a>-->
-<!--              <a *ngIf="toggleMenu" class="close-button">-->
-<!--                <span class="material-symbols-outlined">close</span>-->
-<!--              </a>-->
-<!--            </a>-->
-<!--          </a>-->
+          <!--          <a class="btn btn-filter">-->
+          <!--            <span *ngIf="!toggleMenu" class="material-symbols-outlined"-->
+          <!--              >filter_alt</span-->
+          <!--            >-->
+          <!--            <a>-->
+          <!--              <a *ngIf="toggleMenu" class="close-button">-->
+          <!--                <span class="material-symbols-outlined">close</span>-->
+          <!--              </a>-->
+          <!--            </a>-->
+          <!--          </a>-->
         </div>
         <div class="search-input">
           <a class="btn btn-searchset"
@@ -97,7 +97,7 @@
           [matMenuTriggerFor]="menuMonth"
           class="button-style"
         >
-            {{months[activeFilter5]?.viewValue || 'Month'}}
+          {{ months[activeFilter5]?.viewValue || "Month" }}
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
         <mat-menu #menuMonth="matMenu">
@@ -214,29 +214,27 @@
              </mat-menu>
            </div> -->
 
-<!--          <div class="sort">-->
-<!--            <button-->
-<!--              mat-raised-button-->
-<!--              [matMenuTriggerFor]="menuVendor"-->
-<!--              class="button-style"-->
-<!--            >-->
-<!--              Salesman-->
-<!--              <mat-icon>keyboard_arrow_down</mat-icon>-->
-<!--            </button>-->
-<!--            <mat-menu #menuVendor="matMenu">-->
-<!--              <button-->
-<!--                *ngFor="let data of salesmans; let i = index"-->
-<!--                mat-menu-item-->
-<!--                (click)="filterData(data._id, i, 'salesman')"-->
-<!--                [class.dropdown-active]="activeFilter3 === i"-->
-<!--              >-->
-<!--                {{ data?.name }}-->
-<!--                ({{ data?.phoneNo }})-->
-<!--              </button>-->
-<!--            </mat-menu>-->
-<!--          </div>-->
-
-
+          <!--          <div class="sort">-->
+          <!--            <button-->
+          <!--              mat-raised-button-->
+          <!--              [matMenuTriggerFor]="menuVendor"-->
+          <!--              class="button-style"-->
+          <!--            >-->
+          <!--              Salesman-->
+          <!--              <mat-icon>keyboard_arrow_down</mat-icon>-->
+          <!--            </button>-->
+          <!--            <mat-menu #menuVendor="matMenu">-->
+          <!--              <button-->
+          <!--                *ngFor="let data of salesmans; let i = index"-->
+          <!--                mat-menu-item-->
+          <!--                (click)="filterData(data._id, i, 'salesman')"-->
+          <!--                [class.dropdown-active]="activeFilter3 === i"-->
+          <!--              >-->
+          <!--                {{ data?.name }}-->
+          <!--                ({{ data?.phoneNo }})-->
+          <!--              </button>-->
+          <!--            </mat-menu>-->
+          <!--          </div>-->
         </div>
         <div
           class="left"
@@ -290,7 +288,8 @@
               </th>
               <th>Invoice ID</th>
               <th>Customer Phone No</th>
-              <th>Salesman</th>
+              <th>Product Name</th>
+              <th>Sold Quantity</th>
               <th>Sold Date</th>
               <th>Sub Total</th>
               <th>Discount</th>
@@ -307,7 +306,10 @@
               </td>
               <td>{{ data?.invoiceNo }}</td>
               <td>{{ data?.customer?.phone || "-" }}</td>
-              <td>{{ data?.salesman?.name | uppercase : "-" }}</td>
+              <ng-container *ngFor="let product of data.products">
+                <td>{{ product.name | uppercase }}</td>
+                <td>{{ product.soldQuantity }}</td>
+              </ng-container>
               <td>{{ data?.soldDate | date }}</td>
               <td>৳{{ data?.subTotal | number : "" : "bn" || "-" }}</td>
               <td>৳{{ data?.discountAmount | number : "" : "bn" || "-" }}</td>
@@ -322,6 +324,15 @@
                 </button>
 
                 <button
+                  mat-raised-button
+                  color="primary"
+                  [routerLink]="['../new-sales-view/', data._id]"
+                  type="button"
+                >
+                  <mat-icon>print</mat-icon>
+                </button>
+
+                <!-- <button
                   mat-icon-button
                   mat-mini-fab
                   matTooltip="Export Excel"
@@ -330,7 +341,7 @@
                   <mat-icon class="material-symbols-outlined"
                     >download</mat-icon
                   >
-                </button>
+                </button> -->
               </td>
             </tr>
             <tr class="table-hover" style="background: #fff5ea">

@@ -46,33 +46,6 @@
           </form>
         </div>
       </div>
-
-      <div class="wordset">
-        <ul>
-          <li>
-            <button
-              mat-raised-button
-              color="accent"
-              matTooltip="Export as Excel"
-              (click)="exportToAllExcel()"
-            >
-              <mat-icon>download</mat-icon>
-              Download
-            </button>
-          </li>
-          <li style="margin-left: 10px">
-            <button
-              mat-raised-button
-              color="warn"
-              matTooltip="Import Excel"
-              (click)="pickInput.click()"
-            >
-              <mat-icon>upload</mat-icon>
-              Upload
-            </button>
-          </li>
-        </ul>
-      </div>
     </div>
 
     <input
@@ -89,93 +62,71 @@
       [class]="toggleMenu ? 'filter-show' : 'filter-hide'"
     >
       <div class="filler">
-<!--        <div class="date-filter">-->
-<!--          <mat-form-field-->
-<!--            class="mat-date-input-field"-->
-<!--            appearance="outline"-->
-<!--            (click)="picker.open()"-->
-<!--          >-->
-<!--            <mat-label class="filter-date">Filter Date</mat-label>-->
-<!--            <mat-date-range-input-->
-<!--              [formGroup]="dataFormDateRange"-->
-<!--              [rangePicker]="picker"-->
-<!--              [max]="today"-->
-<!--            >-->
-<!--              <input-->
-<!--                matStartDate-->
-<!--                formControlName="start"-->
-<!--                placeholder="Start date"-->
-<!--                readonly-->
-<!--              />-->
-<!--              <input-->
-<!--                matEndDate-->
-<!--                formControlName="end"-->
-<!--                placeholder="End date"-->
-<!--                readonly-->
-<!--                (dateChange)="endChangeRegDateRange($event)"-->
-<!--              />-->
-<!--            </mat-date-range-input>-->
-<!--            <mat-datepicker-toggle-->
-<!--              matSuffix-->
-<!--              [for]="picker"-->
-<!--            ></mat-datepicker-toggle>-->
-<!--            <mat-date-range-picker #picker></mat-date-range-picker>-->
+        <div class="date-filter">
+          <mat-form-field
+            class="mat-date-input-field"
+            appearance="outline"
+            (click)="picker.open()"
+          >
+            <mat-label class="filter-date">Filter Date</mat-label>
+            <mat-date-range-input
+              [formGroup]="dataFormDateRange"
+              [rangePicker]="picker"
+              [max]="today"
+            >
+              <input
+                matStartDate
+                formControlName="start"
+                placeholder="Start date"
+                readonly
+              />
+              <input
+                matEndDate
+                formControlName="end"
+                placeholder="End date"
+                readonly
+                (dateChange)="endChangeRegDateRange($event)"
+              />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
 
-<!--            <mat-error-->
-<!--              *ngIf="-->
-<!--                dataFormDateRange.controls.start.hasError('matStartDateInvalid')-->
-<!--              "-->
-<!--              >Invalid start date-->
-<!--            </mat-error>-->
-<!--            <mat-error-->
-<!--              *ngIf="-->
-<!--                dataFormDateRange.controls.end.hasError('matEndDateInvalid')-->
-<!--              "-->
-<!--              >Invalid end date-->
-<!--            </mat-error>-->
-<!--          </mat-form-field>-->
-<!--        </div>-->
+            <mat-error
+              *ngIf="
+                dataFormDateRange.controls.start.hasError('matStartDateInvalid')
+              "
+              >Invalid start date
+            </mat-error>
+            <mat-error
+              *ngIf="
+                dataFormDateRange.controls.end.hasError('matEndDateInvalid')
+              "
+              >Invalid end date
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <div class="sort">
           <a
             mat-raised-button
-            [matMenuTriggerFor]="menuCat"
+            [matMenuTriggerFor]="menuProduct"
             class="button-style"
           >
-            Category
+            Product
             <mat-icon>keyboard_arrow_down</mat-icon>
           </a>
-          <mat-menu #menuCat="matMenu">
+          <mat-menu #menuProduct="matMenu">
             <a
-              *ngFor="let data of categories; let i = index"
+              *ngFor="let data of products; let i = index"
               mat-menu-item
-              (click)="filterData(data._id, i, 'category')"
+              (click)="filterData(data._id, i, 'name')"
               [class.dropdown-active]="activeFilter1 === i"
             >
               {{ data.name }}
             </a>
-          </mat-menu>
-        </div>
-
-        <div class="sort">
-          <button
-            mat-raised-button
-            [matMenuTriggerFor]="menuVendor"
-            class="button-style"
-          >
-            Vendor
-            <mat-icon>keyboard_arrow_down</mat-icon>
-          </button>
-          <mat-menu #menuVendor="matMenu">
-            <button
-              *ngFor="let data of vendors; let i = index"
-              mat-menu-item
-              (click)="filterData(data._id, i, 'vendor')"
-              [class.dropdown-active]="activeFilter4 === i"
-            >
-              {{ data?.name }}
-              ({{ data?.phone }})
-            </button>
           </mat-menu>
         </div>
         <div class="sort">
@@ -188,20 +139,6 @@
             <mat-icon>keyboard_arrow_down</mat-icon>
           </button>
           <mat-menu #menuSort="matMenu">
-            <!--              <button-->
-            <!--                mat-menu-item-->
-            <!--                (click)="sortData({ updatedAt: -1 }, 1)"-->
-            <!--                [class.dropdown-active]="activeSort === 1"-->
-            <!--              >-->
-            <!--                Last Update-->
-            <!--              </button>-->
-            <!--              <button-->
-            <!--                (click)="sortData({ name: 1 }, 2)"-->
-            <!--                mat-menu-item-->
-            <!--                [class.dropdown-active]="activeSort === 2"-->
-            <!--              >-->
-            <!--                A-Z-->
-            <!--              </button>-->
             <button
               (click)="sortData({ salePrice: 1 }, 3)"
               mat-menu-item
@@ -278,16 +215,15 @@
                 class="mat-check"
               ></mat-checkbox>
             </th>
-            <th>Brand Name</th>
-            <th>Item</th>
+            <th>Product Image</th>
+            <th>Product Name</th>
             <th>Code</th>
-            <th>Model</th>
+            <th>Qty</th>
             <th>Purchase Price</th>
             <th>Sale Price</th>
-            <th>Qty</th>
-            <th>T P.P</th>
+            <th>Total Purchase Price</th>
+            <th>Profit</th>
             <th>Total Amount</th>
-<!--            <th>Date</th>-->
             <th>Action</th>
           </tr>
           <tr
@@ -310,19 +246,15 @@
                 (ngModelChange)="onCheckChange($event, i, data._id)"
               ></mat-checkbox>
             </td>
-
-            <!--            <td>#{{ data?.productId }}</td>-->
-            <!--            <td class="product-img">-->
-            <!--              <img [src]="data?.images ? data?.images[0] : ''" />-->
-            <!--            </td>-->
+            <td class="product-img">
+              <img [src]="data?.images ? data?.images[0] : ''" />
+            </td>
             <td>{{ data?.name || "-" }}</td>
-            <td>{{ data?.category?.name || "-" }}</td>
-            <td>{{ data?.sku  || "-" }}</td>
-            <td>{{ data?.model || "-" }}</td>
-            <!--            <td> {{data?.vendor ? data?.vendor?.name + ' (' + data?.vendor?.phone + ')' : '-'}}</td>-->
+            <td>{{ data?.sku || "-" }}</td>
+            <td>{{ data?.quantity || "0" }}</td>
             <td>৳ {{ data?.purchasePrice | number : "" : "bn" || "-" }}</td>
             <td>৳ {{ data?.salePrice | number : "" : "bn" || "-" }}</td>
-            <td>{{ data?.quantity || "0" }}</td>
+
             <td>
               ৳
               {{
@@ -331,9 +263,16 @@
             </td>
             <td>
               ৳
+              {{
+                data?.salePrice - data?.purchasePrice
+                  | number : "" : "bn" || "-"
+              }}
+            </td>
+            <td>
+              ৳
               {{ data?.salePrice * data?.quantity | number : "" : "bn" || "-" }}
             </td>
-<!--            <td>{{ data?.createdAt | date }}</td>-->
+            <!--            <td>{{ data?.createdAt | date }}</td>-->
             <!--            <td>{{ data?.status === true ? "Yes" : "No" }}</td>-->
             <td class="button">
               <button
@@ -344,35 +283,45 @@
               >
                 <mat-icon>edit</mat-icon>
               </button>
-              <button
+              <!-- <button
                 matTooltip="Barcode"
                 mat-mini-fab
                 color="primary"
                 [routerLink]="['../barcode-generate/', data._id]"
               >
                 <mat-icon>qr_code_2</mat-icon>
-              </button>
+              </button> -->
             </td>
           </tr>
           <!-- END Main Data -->
 
-          <tr class="table-hover" style="background: #fff5ea" *ngIf="products.length">
-            <!--            <td></td>-->
+          <tr
+            class="table-hover"
+            style="background: #fff5ea"
+            *ngIf="products.length"
+          >
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
+            <td style="font-weight: bold">
+              {{ productCalculation?.totalQuantity }}
+            </td>
             <td></td>
             <td></td>
             <!--            <td>৳ {{ productCalculation?.sumPurchasePrice | number: '' : 'bn'}}</td>-->
             <!--            <td>৳ {{ productCalculation?.sumSalePrice | number: '' : 'bn'}}</td>-->
-            <td style="font-weight: bold">
-              {{ productCalculation?.totalQuantity }}
-            </td>
+
             <td style="font-weight: bold">
               ৳
               {{ productCalculation?.totalPurchasePrice | number : "" : "bn" }}
+            </td>
+            <td style="font-weight: bold">
+              ৳
+              {{
+                productCalculation?.totalSalePrice -
+                  productCalculation?.totalPurchasePrice | number : "" : "bn"
+              }}
             </td>
             <td style="font-weight: bold">
               ৳ {{ productCalculation?.totalSalePrice | number : "" : "bn" }}
@@ -423,13 +372,16 @@
     </div>
 
     <div class="bottom-border"></div>
-
   </div>
 </section>
 
-
 <!-- TEMPLATE NGX SPINNER-->
-<ngx-spinner bdColor = "rgba(0,0,0,0.3)" size = "medium" color = "#fff" type = "ball-scale-pulse" [fullScreen] = "true">
-  <p style="color: white" > Loading... </p>
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.3)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-pulse"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
 </ngx-spinner>
-

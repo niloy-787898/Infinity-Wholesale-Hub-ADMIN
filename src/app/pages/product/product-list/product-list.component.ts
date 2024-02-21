@@ -1,31 +1,45 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {CategoryService} from '../../../services/common/category.service';
-import {UiService} from '../../../services/core/ui.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ReloadService} from '../../../services/core/reload.service';
-import {EMPTY, Subscription} from 'rxjs';
-import {Product, ProductCalculation} from '../../../interfaces/common/product.interface';
-import {ProductService} from '../../../services/common/product.service';
-import {FilterData} from '../../../interfaces/gallery/filter-data';
-import {Category} from '../../../interfaces/common/category.interface';
-import {Brand} from '../../../interfaces/common/brand.interface';
-import {Unit} from '../../../interfaces/common/unit.interface';
-import {BrandService} from '../../../services/common/brand.service';
-import {UnitService} from '../../../services/common/unit.service';
-import {debounceTime, distinctUntilChanged, pluck, switchMap} from 'rxjs/operators';
-import {Pagination} from 'src/app/interfaces/core/pagination';
-import {FormControl, FormGroup, NgForm} from '@angular/forms';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
-import {UtilsService} from 'src/app/services/core/utils.service';
-import {MatCheckbox, MatCheckboxChange} from '@angular/material/checkbox';
-import {AdminPermissions} from 'src/app/enum/admin-permission.enum';
-import {ConfirmDialogComponent} from 'src/app/shared/components/ui/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {AdminService} from 'src/app/services/admin/admin.service';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { CategoryService } from '../../../services/common/category.service';
+import { UiService } from '../../../services/core/ui.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ReloadService } from '../../../services/core/reload.service';
+import { EMPTY, Subscription } from 'rxjs';
+import {
+  Product,
+  ProductCalculation,
+} from '../../../interfaces/common/product.interface';
+import { ProductService } from '../../../services/common/product.service';
+import { FilterData } from '../../../interfaces/gallery/filter-data';
+import { Category } from '../../../interfaces/common/category.interface';
+import { Brand } from '../../../interfaces/common/brand.interface';
+import { Unit } from '../../../interfaces/common/unit.interface';
+import { BrandService } from '../../../services/common/brand.service';
+import { UnitService } from '../../../services/common/unit.service';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  pluck,
+  switchMap,
+} from 'rxjs/operators';
+import { Pagination } from 'src/app/interfaces/core/pagination';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { UtilsService } from 'src/app/services/core/utils.service';
+import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import { AdminPermissions } from 'src/app/enum/admin-permission.enum';
+import { ConfirmDialogComponent } from 'src/app/shared/components/ui/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AdminService } from 'src/app/services/admin/admin.service';
 import * as XLSX from 'xlsx';
-import {VendorService} from "../../../services/common/vendor.service";
-import {Vendor} from "../../../interfaces/common/vendor.interface";
+import { VendorService } from '../../../services/common/vendor.service';
+import { Vendor } from '../../../interfaces/common/vendor.interface';
 
 @Component({
   selector: 'app-product-list',
@@ -46,11 +60,7 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   id?: string;
   productCount = 0;
   products?: Product[] = [];
-  categories: Category[] = [];
   holdPrevData: Product[] = [];
-  brands: Brand[] = [];
-  vendors: Vendor[] = [];
-  units: Unit[] = [];
   productCalculation: ProductCalculation;
   isLoading: boolean = true;
 
@@ -69,7 +79,13 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   activeFilter4: number = null;
   activeSort: number;
 
-  showPerPageList = [{num: '25'}, {num: '50'}, {num: '100'}, {num: '500'}, {num: '1000'}];
+  showPerPageList = [
+    { num: '25' },
+    { num: '50' },
+    { num: '100' },
+    { num: '500' },
+    { num: '1000' },
+  ];
 
   // Selected Data
   selectedIds: string[] = [];
@@ -101,19 +117,14 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private adminService: AdminService,
-    private categoryService: CategoryService,
-    private brandService: BrandService,
-    private vendorService: VendorService,
     private dialog: MatDialog,
-    private unitService: UnitService,
     private uiService: UiService,
     private router: Router,
     private reloadService: ReloadService,
     private utilsService: UtilsService,
     private spinner: NgxSpinnerService,
     private activatedRoute: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     // Reload Data
@@ -130,10 +141,6 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.getAllProducts();
     });
-
-    // Base Data
-    this.getAllCategory();
-    this.getAllVendors();
   }
 
   ngAfterViewInit(): void {
@@ -165,8 +172,6 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
             images: 1,
             name: 1,
             sku: 1,
-            category: 1,
-            brand: 1,
             price: 1,
             unit: 1,
             model: 1,
@@ -181,7 +186,7 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
             pagination: pagination,
             filter: this.filter,
             select: mSelect,
-            sort: {createdAt: -1},
+            sort: { createdAt: -1 },
           };
 
           return this.productService.getAllProducts(
@@ -200,7 +205,7 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
           this.totalProducts = res.count;
           this.totalProductsStore = res.count;
           this.currentPage = 1;
-          this.router.navigate([], {queryParams: {page: this.currentPage}});
+          this.router.navigate([], { queryParams: { page: this.currentPage } });
         },
         error: (error) => {
           console.log(error);
@@ -209,20 +214,21 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private insertManyProducts(products) {
-
-    this.subDataFive = this.productService.insertManyProducts(products).subscribe({
-      next: (res) => {
-        if (res.success) {
-          this.uiService.success(res.message);
-          this.router.navigate(['/product/', 'product-list']);
-        } else {
-          this.uiService.warn(res.message);
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    this.subDataFive = this.productService
+      .insertManyProducts(products)
+      .subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.uiService.success(res.message);
+            this.router.navigate(['/product/', 'product-list']);
+          } else {
+            this.uiService.warn(res.message);
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 
   /**
@@ -346,16 +352,15 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
       select: {
         name: 1,
         sku: 1,
-        category: 1,
-        model: 1,
+        images: 1,
         price: 1,
-        createdAt:1,
-        createdAtString:1,
+        createdAt: 1,
+        createdAtString: 1,
         quantity: 1,
         purchasePrice: 1,
         salePrice: 1,
       },
-      sort: this.sortQuery ? this.sortQuery : {createdAt: -1},
+      sort: this.sortQuery ? this.sortQuery : { createdAt: -1 },
     };
 
     this.subDataOne = this.productService
@@ -372,7 +377,6 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
             this.productCount = res.count;
             this.totalProductsStore = res.count;
             this.productCalculation = res.calculation;
-
           }
         },
         error: (err) => {
@@ -396,7 +400,7 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
             this.uiService.success(res.message);
             // fetch Data
             if (this.currentPage > 1) {
-              this.router.navigate([], {queryParams: {page: 1}});
+              this.router.navigate([], { queryParams: { page: 1 } });
             } else {
               this.getAllProducts();
             }
@@ -451,103 +455,6 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   //     });
   // }
 
-  private getAllCategory() {
-    // Select
-    const mSelect = {
-      name: 1,
-    };
-
-    const filterData: FilterData = {
-      pagination: null,
-      filter: null,
-      select: mSelect,
-      sort: {name: 1},
-    };
-
-    this.subDataFour = this.categoryService
-      .getAllCategory(filterData, null)
-      .subscribe({
-        next: (res) => {
-          this.categories = res.data;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-  }
-
-  private getAllBrands() {
-    // Select
-    const mSelect = {
-      name: 1,
-    };
-
-    const filterData: FilterData = {
-      pagination: null,
-      filter: null,
-      select: mSelect,
-      sort: {name: 1},
-    };
-
-    this.subDataFive = this.brandService
-      .getAllBrands(filterData, null)
-      .subscribe({
-        next: (res) => {
-          this.brands = res.data;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-  }
-
-  private getAllUnits() {
-    // Select
-    const mSelect = {
-      name: 1,
-    };
-
-    const filterData: FilterData = {
-      pagination: null,
-      filter: null,
-      select: mSelect,
-      sort: {name: 1},
-    };
-
-    this.subDataSix = this.unitService.getAllUnits(filterData, null).subscribe({
-      next: (res) => {
-        this.units = res.data;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
-
-  private getAllVendors() {
-    // Select
-    const mSelect = {
-      name: 1,
-      phone:1,
-    };
-
-    const filterData: FilterData = {
-      pagination: null,
-      filter: null,
-      select: mSelect,
-      sort: {name: 1},
-    };
-
-    this.subDataSeven = this.vendorService.getAllVendors(filterData, null).subscribe({
-      next: (res) => {
-        this.vendors = res.data;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
-
   /**
    * FILTER DATA & Sorting
    * filterData()
@@ -559,33 +466,19 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   filterData(value: any, index: number, type: string) {
     switch (type) {
-      case 'category': {
-        this.filter = {...this.filter, ...{'category._id': value}};
+      case 'product': {
+        this.filter = { ...this.filter, ...{ 'product._id': value } };
         this.activeFilter1 = index;
         break;
       }
-      case 'brand': {
-        this.filter = {...this.filter, ...{'brand._id': value}};
-        this.activeFilter2 = index;
-        break;
-      }
-      case 'unit': {
-        this.filter = {...this.filter, ...{'unit._id': value}};
-        this.activeFilter3 = index;
-        break;
-      }
-      case 'vendor': {
-        this.filter = {...this.filter, ...{'vendor._id': value}};
-        this.activeFilter3 = index;
-        break;
-      }
+
       default: {
         break;
       }
     }
     // Re fetch Data
     if (this.currentPage > 1) {
-      this.router.navigate([], {queryParams: {page: 1}});
+      this.router.navigate([], { queryParams: { page: 1 } });
     } else {
       this.getAllProducts();
     }
@@ -600,12 +493,12 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dataFormDateRange.value.end
       );
 
-      const qData = {createdAtString: {$gte: startDate, $lte: endDate}};
-      this.filter = {...this.filter, ...qData};
+      const qData = { createdAtString: { $gte: startDate, $lte: endDate } };
+      this.filter = { ...this.filter, ...qData };
       // const index = this.filter.findIndex(x => x.hasOwnProperty('createdAt'));
 
       if (this.currentPage > 1) {
-        this.router.navigate([], {queryParams: {page: 1}});
+        this.router.navigate([], { queryParams: { page: 1 } });
       } else {
         this.getAllProducts();
       }
@@ -619,7 +512,7 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public onPageChanged(event: any) {
-    this.router.navigate([], {queryParams: {page: event}});
+    this.router.navigate([], { queryParams: { page: event } });
   }
 
   onSelectShowPerPage(val) {
@@ -635,17 +528,16 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activeSort = null;
     this.activeFilter1 = null;
     this.activeFilter2 = null;
-    this.sortQuery = {createdAt: -1};
+    this.sortQuery = { createdAt: -1 };
     this.filter = null;
     this.dataFormDateRange.reset();
     // Re fetch Data
     if (this.currentPage > 1) {
-      this.router.navigate([], {queryParams: {page: 1}});
+      this.router.navigate([], { queryParams: { page: 1 } });
     } else {
       this.getAllProducts();
     }
   }
-
 
   /**
    * EXPORTS TO EXCEL
@@ -662,47 +554,41 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
       images: 1,
       name: 1,
       sku: 1,
-      category: 1,
-      brand: 1,
-      price: 1,
-      model:1,
-      unit: 1,
       quantity: 1,
       purchasePrice: 1,
       salePrice: 1,
       status: 1,
       createdAt: 1,
-      productId: 1
-    }
+      productId: 1,
+    };
 
     const filterData: FilterData = {
       filter: this.filter,
       select: mSelect,
       sort: this.sortQuery,
       pagination: null,
-    }
+    };
 
-
-    this.subDataOne = this.productService.getAllProducts(filterData, this.searchQuery)
+    this.subDataOne = this.productService
+      .getAllProducts(filterData, this.searchQuery)
       .subscribe({
-        next: (res => {
+        next: (res) => {
           const subscriptionReports = res.data;
 
-          const mData = subscriptionReports.map(m => {
+          const mData = subscriptionReports.map((m) => {
             return {
               productId: m.productId,
-              'Brand Name': m.name,
-              'Item': m?.category?.name,
-              code: m.sku,
-              model: m.model,
+              'Product Image': m.images,
+              'Product name': m.name,
+              sku: m.sku,
               purchasePrice: m?.purchasePrice,
               salePrice: m?.salePrice,
               Qty: m?.quantity,
               // 'T T.P' : m?.purchasePrice * m?.quantity,
               // 'Total Amount' : m?.salePrice * m?.quantity,
               createdAt: this.utilsService.getDateString(m.createdAt),
-            }
-          })
+            };
+          });
           // EXPORT XLSX
           const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(mData);
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
@@ -710,14 +596,13 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
           XLSX.writeFile(wb, `Products_Data_${date}.xlsx`);
 
           this.spinner.hide();
-        }),
-        error: (error => {
+        },
+        error: (error) => {
           this.spinner.hide();
           console.log(error);
-        })
+        },
       });
   }
-
 
   /**
    * IMPORT EXCEL DATA
@@ -732,7 +617,7 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     reader.onload = (event) => {
       const data = reader.result;
-      workBook = XLSX.read(data, {type: 'binary'});
+      workBook = XLSX.read(data, { type: 'binary' });
       jsonData = workBook.SheetNames.reduce((initial, name) => {
         const sheet = workBook.Sheets[name];
         initial[name] = XLSX.utils.sheet_to_json(sheet);

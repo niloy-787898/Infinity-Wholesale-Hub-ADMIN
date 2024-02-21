@@ -15,7 +15,7 @@
   >
     <div class="grid">
       <div class="from">
-        <mat-label>Brand Name</mat-label>
+        <mat-label>Product Name</mat-label>
         <mat-form-field appearance="outline">
           <input
             formControlName="name"
@@ -23,77 +23,14 @@
             placeholder="Enter name"
             required
           />
-          <!--          <mat-error>This field is required</mat-error>-->
+          <mat-error>This field is required</mat-error>
         </mat-form-field>
       </div>
-      <div class="from">
-        <mat-label>Item</mat-label>
-        <mat-form-field appearance="outline">
-          <mat-select
-            formControlName="category"
-            placeholder="Choose Category"
-            (selectionChange)="onCategorySelect($event)"
-          >
-            <mat-option *ngFor="let data of categories" [value]="data._id">
-              {{ data.name }}
-            </mat-option>
-          </mat-select>
-          <!--          <mat-error>This field is required.</mat-error>-->
-        </mat-form-field>
-      </div>
-      <div class="from">
-        <mat-label>Model</mat-label>
-        <mat-form-field appearance="outline">
-          <input formControlName="model" matInput placeholder="Enter model" />
-          <!--          <mat-error>This field is required</mat-error>-->
-        </mat-form-field>
-      </div>
-      <div class="from">
-        <mat-label>Others</mat-label>
-        <mat-form-field appearance="outline">
-          <input
-            formControlName="others"
-            matInput
-            placeholder="Watt/Capacity/Color/etc.."
-          />
-          <!--          <mat-error>This field is required</mat-error>-->
-        </mat-form-field>
-      </div>
-      <!--      <div class="from">-->
-      <!--        <mat-label>Sub Category</mat-label>-->
-      <!--        <mat-form-field appearance="outline">-->
-      <!--          <mat-select formControlName="subcategory" required placeholder="Choose Category">-->
-      <!--            <mat-option *ngFor="let data of subcategories" [value]="data._id">-->
-      <!--              {{data.name}}-->
-      <!--            </mat-option>-->
-      <!--          </mat-select>-->
-      <!--          <mat-error>This field is required.</mat-error>-->
-      <!--        </mat-form-field>-->
-      <!--      </div>-->
-      <!--      <div class="from">-->
-      <!--        <mat-label>Brand</mat-label>-->
-      <!--        <mat-form-field appearance="outline">-->
-      <!--          <mat-select formControlName="brand" required placeholder="Choose Brand">-->
-      <!--            <mat-option *ngFor="let data of brands" [value]="data._id">-->
-      <!--              {{data.name}}-->
-      <!--            </mat-option>-->
-      <!--          </mat-select>-->
-      <!--          <mat-error>This field is required.</mat-error>-->
-      <!--        </mat-form-field>-->
-      <!--      </div>-->
-    </div>
-    <div class="grid">
-      <!--      <div class="from">-->
-      <!--        <mat-label>Sold Quantity</mat-label>-->
-      <!--        <mat-form-field appearance="outline">-->
-      <!--          <input formControlName="soldQuantity" matInput digitOnly/>-->
-      <!--        </mat-form-field>-->
-      <!--      </div>-->
       <div class="from">
         <mat-label>Code</mat-label>
         <mat-form-field appearance="outline">
-          <input formControlName="sku" matInput placeholder="Enter code" />
-          <!--          <mat-error>This field is required</mat-error>-->
+          <input formControlName="sku" matInput placeholder="Enter code" required/>
+          <mat-error>This field is required</mat-error>
         </mat-form-field>
       </div>
       <div [class]="id ? 'quantity-row' : ''">
@@ -111,7 +48,7 @@
               digitOnly
               [allowNegatives]="true"
             />
-            <!--          <mat-error>This field is required.</mat-error>-->
+            <mat-error>This field is required.</mat-error>
           </mat-form-field>
         </div>
         <div class="from-qty" *ngIf="id">
@@ -131,7 +68,6 @@
           </mat-form-field>
         </div>
       </div>
-
       <div class="from">
         <mat-label>Purchase Price</mat-label>
         <mat-form-field appearance="outline">
@@ -147,6 +83,15 @@
           <!--          <mat-error>This field is required.</mat-error>-->
         </mat-form-field>
       </div>
+    </div>
+    <div class="grid">
+      <!--      <div class="from">-->
+      <!--        <mat-label>Sold Quantity</mat-label>-->
+      <!--        <mat-form-field appearance="outline">-->
+      <!--          <input formControlName="soldQuantity" matInput digitOnly/>-->
+      <!--        </mat-form-field>-->
+      <!--      </div>-->
+
       <div class="from">
         <mat-label>Sale Price</mat-label>
         <mat-form-field appearance="outline">
@@ -162,33 +107,6 @@
           <!--          <mat-error>This field is required.</mat-error>-->
         </mat-form-field>
       </div>
-    </div>
-    <div class="grid">
-      <!--      <div class="from">-->
-      <!--        <mat-label>SKU</mat-label>-->
-      <!--        <mat-form-field appearance="outline">-->
-      <!--          <input formControlName="sku" matInput digitOnly/>-->
-      <!--        </mat-form-field>-->
-      <!--      </div>-->
-      <!--      <div class="from">-->
-      <!--        <mat-label>Unit</mat-label>-->
-      <!--        <mat-form-field appearance="outline">-->
-      <!--          <mat-select formControlName="unit" required placeholder="Choose Unit">-->
-      <!--            <mat-option *ngFor="let data of units" [value]="data._id">-->
-      <!--              {{data.name}}-->
-      <!--            </mat-option>-->
-      <!--          </mat-select>-->
-      <!--          <mat-error>This field is required.</mat-error>-->
-      <!--        </mat-form-field>-->
-      <!--      </div>-->
-      <div class="form">
-        <app-vendor-search-field
-          (onSelect)="onSelectVendorList($event)"
-          [vendor]="vendor"
-        >
-        </app-vendor-search-field>
-      </div>
-
       <div class="from">
         <mat-label>Active</mat-label>
         <mat-form-field appearance="outline">
@@ -206,43 +124,19 @@
         </mat-form-field>
       </div>
     </div>
-    <!-- <div class="from">
+
+    <div class="from">
       <mat-label>Description</mat-label>
       <mat-form-field appearance="outline">
-        <textarea class="text-area" formControlName="description" matInput></textarea>
+        <textarea
+          class="text-area"
+          formControlName="description"
+          matInput
+        ></textarea>
       </mat-form-field>
-    </div> -->
+    </div>
 
     <!-- upload-photo start -->
-    <div class="form-group">
-      <!--      <label>Product Image</label>-->
-      <!--      <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)"-->
-      <!--           [style.height]="id ? '70%' : '93%'">-->
-      <!--        <ngx-dropzone-label>-->
-      <!--          <div class="image-uploads">-->
-      <!--            <img src="../../../../assets/images/svg/upload.svg" style="width: 40px;" alt="img">-->
-      <!--            <h4>Drag and drop a file to upload</h4>-->
-      <!--          </div>-->
-      <!--        </ngx-dropzone-label>-->
-
-      <!--        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"-->
-      <!--                                    [removable]="true" (removed)="onRemove(f)">-->
-      <!--          &lt;!&ndash;                  <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>&ndash;&gt;-->
-      <!--          <ngx-dropzone-label>-->
-      <!--            &lt;!&ndash;             {{ f.type }}&ndash;&gt;-->
-      <!--          </ngx-dropzone-label>-->
-      <!--        </ngx-dropzone-image-preview>-->
-      <!--      </div>-->
-      <!--      <div class="card">-->
-      <!--        <div *ngFor="let image of oldImage; let i = index" class="images">-->
-      <!--          <img [src]="image" class="parent-image">-->
-      <!--          <div class="hover-button">-->
-      <!--            <a (click)="removeOldImage(i)"><img src="../../../../assets/images/svg/delete.svg" style="width: 25px;"-->
-      <!--                                                alt="img"></a>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-    </div>
     <div class="form-group">
       <label>Product Image</label>
       <div
@@ -270,9 +164,11 @@
           [removable]="true"
           (removed)="onRemove(f)"
         >
-          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+          &lt;!&ndash;
+          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label
+          >&ndash;&gt;
           <ngx-dropzone-label>
-            {{ f.type }}
+            &lt;!&ndash; {{ f.type }}&ndash;&gt;
           </ngx-dropzone-label>
         </ngx-dropzone-image-preview>
       </div>

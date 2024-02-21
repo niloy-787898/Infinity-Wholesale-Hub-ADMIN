@@ -32,6 +32,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {NoContentModule} from "../../shared/lazy/no-content/no-content.module";
 import { SalesListMonthComponent } from './sales-list-month/sales-list-month.component';
+import { SalesInvoicePrintByIdComponent } from './sales-invoice-print-by-id/sales-invoice-print-by-id.component';
 
 
 
@@ -49,7 +50,8 @@ import { SalesListMonthComponent } from './sales-list-month/sales-list-month.com
     PreOrderAddComponent,
     PreOrderListComponent,
     MySalesReportComponent,
-    SalesListMonthComponent
+    SalesListMonthComponent,
+    SalesInvoicePrintByIdComponent
   ],
     imports: [
         CommonModule,

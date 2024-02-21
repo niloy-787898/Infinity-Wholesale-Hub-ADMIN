@@ -1,5 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { NewSales } from '../../../interfaces/common/new-sales.interface';
 import { UiService } from '../../../services/core/ui.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -19,15 +25,12 @@ import { UtilsService } from '../../../services/core/utils.service';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-
 @Component({
   selector: 'app-new-sales',
   templateUrl: './new-sales.component.html',
-  styleUrls: ['./new-sales.component.scss']
+  styleUrls: ['./new-sales.component.scss'],
 })
 export class NewSalesComponent implements OnInit {
-
-
   // Data Form
   @ViewChild('formElement') formElement: NgForm;
 
@@ -45,7 +48,6 @@ export class NewSalesComponent implements OnInit {
   searchQuery = null;
   @ViewChild('searchForm') searchForm: NgForm;
   @ViewChild('searchInput') searchInput: ElementRef;
-
 
   // Store Data
   id?: string;
@@ -74,7 +76,6 @@ export class NewSalesComponent implements OnInit {
   private subDataFive: Subscription;
   private subForm: Subscription;
 
-
   constructor(
     private fb: FormBuilder,
     private uiService: UiService,
@@ -84,16 +85,14 @@ export class NewSalesComponent implements OnInit {
     private newSalesService: NewSalesService,
     private router: Router,
     private dialog: MatDialog,
-    private utilsService: UtilsService,
+    private utilsService: UtilsService
   ) {
     (window as any).pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
 
-
   ngOnInit(): void {
-
     // Init Data Form
-    this.initDataForm()
+    this.initDataForm();
 
     // GET ID FORM PARAM
     this.activatedRoute.paramMap.subscribe((param) => {
@@ -116,12 +115,9 @@ export class NewSalesComponent implements OnInit {
   private initDataForm() {
     this.dataForm = this.fb.group({
       name: [null, Validators.required],
-      phone: new FormControl(
-        {value: null, disabled: false},
-        [
-          Validators.minLength(11)
-        ]
-      ),
+      phone: new FormControl({ value: null, disabled: false }, [
+        Validators.minLength(11),
+      ]),
       address: [null],
     });
   }
@@ -134,11 +130,10 @@ export class NewSalesComponent implements OnInit {
   }
 
   onSubmit() {
-    // if (this.dataForm.invalid) {
-    //   this.uiService.warn('Please Add Customer name and phone number');
-    //   return;
-    // }
-    console.log(this.dataForm.errors)
+    if (this.dataForm.invalid) {
+      this.uiService.warn('Please Add Customer name and phone number');
+      return;
+    }
 
     if (!this.newSales && !this.products.length) {
       this.uiService.warn('Please Add some products to continue sales');
@@ -147,9 +142,9 @@ export class NewSalesComponent implements OnInit {
     let totalPurchasePrice;
 
     this.products.filter((m) => {
-      console.log(m)
-      totalPurchasePrice += (m.salePrice * m.soldQuantity)
-    })
+      console.log(m);
+      totalPurchasePrice += m.salePrice * m.soldQuantity;
+    });
 
     const mData = {
       customer: this.dataForm.valid ? { ...this.dataForm.value } : null,
@@ -161,14 +156,21 @@ export class NewSalesComponent implements OnInit {
       totalPurchasePrice: totalPurchasePrice,
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
-    }
+    };
 
     if (this.newSales) {
       this.updateNewSalesById();
     } else {
-      this.openConfirmDialog(mData)
-    }
+      // this.openConfirmDialog(mData)
+      this.addNewSales();
 
+      // Specify the delay time in milliseconds
+      const delayMilliseconds = 3000; // 2 seconds
+
+      setTimeout(() => {
+        this.router.navigate(['/sales/sales-list']);
+      }, delayMilliseconds);
+    }
   }
 
   customerInfoToggle() {
@@ -183,21 +185,21 @@ export class NewSalesComponent implements OnInit {
    */
 
   private getAllCustomers() {
-
     // Select
     const mSelect = {
       name: 1,
-      slug: 1
-    }
+      slug: 1,
+    };
 
     const filterData: FilterData = {
       pagination: null,
       filter: null,
       select: mSelect,
-      sort: { name: 1 }
-    }
+      sort: { name: 1 },
+    };
 
-    this.subDataOne = this.customerService.getAllCustomers(filterData, null)
+    this.subDataOne = this.customerService
+      .getAllCustomers(filterData, null)
       .subscribe({
         next: (res) => {
           this.customers = res.data;
@@ -208,8 +210,8 @@ export class NewSalesComponent implements OnInit {
         },
         error: (error) => {
           console.log(error);
-        }
-      })
+        },
+      });
   }
 
   private addNewSales(type?: string) {
@@ -218,10 +220,9 @@ export class NewSalesComponent implements OnInit {
     let totalPurchasePrice: number = 0;
 
     this.products.filter((m) => {
-      console.log(m)
-      totalPurchasePrice += (m.purchasePrice * m.soldQuantity)
-    })
-
+      console.log(m);
+      totalPurchasePrice += m.purchasePrice * m.soldQuantity;
+    });
 
     const mData = {
       customer: { ...this.dataForm.value } || null,
@@ -233,7 +234,7 @@ export class NewSalesComponent implements OnInit {
       totalPurchasePrice: totalPurchasePrice,
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
-    }
+    };
 
     this.subDataFive = this.newSalesService.addNewSales(mData).subscribe({
       next: (res) => {
@@ -241,13 +242,13 @@ export class NewSalesComponent implements OnInit {
         if (res.success) {
           this.uiService.success(res.message);
           this.formElement.resetForm();
-          this.products = []
+          this.products = [];
           this.discount = 0;
           this.total = 0;
           this.subTotal = 0;
           mData['invoiceNo'] = res.data.invoiceNo;
           if (type === 'print') {
-            this.downloadPdfInvoice('print', mData)
+            this.downloadPdfInvoice('print', mData);
           }
         } else {
           this.uiService.warn(res.message);
@@ -258,27 +259,27 @@ export class NewSalesComponent implements OnInit {
         console.log(error);
       },
     });
-
   }
 
   private getNewSalesById() {
     // Select
     const mSelect = {
       name: 1,
-      slug: 1
-    }
+      slug: 1,
+    };
 
     const filterData: FilterData = {
       pagination: null,
       filter: null,
       select: mSelect,
-      sort: { name: 1 }
-    }
+      sort: { name: 1 },
+    };
 
     this.spinnerService.show();
-    this.subDataThree = this.newSalesService.getNewSalesById(this.id)
+    this.subDataThree = this.newSalesService
+      .getNewSalesById(this.id)
       .subscribe({
-        next: (res => {
+        next: (res) => {
           this.spinnerService.hide();
           if (res.data) {
             this.newSales = res.data;
@@ -287,14 +288,14 @@ export class NewSalesComponent implements OnInit {
             this.subTotal = this.newSales.subTotal;
             this.total = this.newSales.total;
             this.discount = this.newSales.discountAmount;
-            console.log(this.newSales)
+            console.log(this.newSales);
             this.setFormValue();
           }
-        }),
-        error: (error => {
+        },
+        error: (error) => {
           this.spinnerService.hide();
           console.log(error);
-        })
+        },
       });
   }
 
@@ -308,13 +309,13 @@ export class NewSalesComponent implements OnInit {
       discountAmount: this.discount,
       total: this.total,
       subTotal: this.subTotal,
-      invoiceNo: this.newSales.invoiceNo
-    }
+      invoiceNo: this.newSales.invoiceNo,
+    };
 
-
-    this.subDataFour = this.newSalesService.updateNewSalesById(this.newSales._id, mData)
+    this.subDataFour = this.newSalesService
+      .updateNewSalesById(this.newSales._id, mData)
       .subscribe({
-        next: (res => {
+        next: (res) => {
           this.spinnerService.hide();
           if (res.success) {
             this.uiService.success(res.message);
@@ -322,12 +323,11 @@ export class NewSalesComponent implements OnInit {
           } else {
             this.uiService.warn(res.message);
           }
-
-        }),
-        error: (error => {
+        },
+        error: (error) => {
           this.spinnerService.hide();
           console.log(error);
-        })
+        },
       });
   }
 
@@ -340,34 +340,65 @@ export class NewSalesComponent implements OnInit {
   onSelectCustomerList(data: Customer) {
     this.customer = data;
     this.dataForm.patchValue(this.customer);
-    console.log('this.customer', this.customer)
+    console.log('this.customer', this.customer);
   }
 
   onSelectProduct(data: Product) {
     this.subTotal += data?.salePrice;
-    this.total = this.subTotal - this.discount
-    this.products.push({ ...data, ...{ soldQuantity: 1 } })
+    this.total = this.subTotal - this.discount;
+    this.products.push({ ...data, ...{ soldQuantity: 1 } });
   }
-
 
   // Sales Data and Calculation handeling
   increaseQuantity(data: Product) {
     if (this.newSales) {
-      this.uiService.warn("You can't increase product quantity on return sale")
-    }
-    else {
+      this.uiService.warn("You can't increase product quantity on return sale");
+    } else {
       this.products = this.products.map((m) => {
         if (m._id === data._id) {
           if (m.quantity > m.soldQuantity) {
             m.soldQuantity++;
             this.subTotal += data?.salePrice;
-            this.total = this.subTotal - this.discount
+            this.total = this.subTotal - this.discount;
           } else {
-            this.uiService.warn("You can't add more quantity")
+            this.uiService.warn("You can't add more quantity");
           }
         }
         return m;
-      })
+      });
+    }
+  }
+  changeQuantity(newQuantity: number, data: Product) {
+    if (this.newSales) {
+      this.uiService.warn("You can't change product quantity on a new sale");
+    } else {
+      this.products = this.products.map((m) => {
+        if (m._id === data._id) {
+          if (newQuantity >= 0) {
+            const difference = newQuantity - m.soldQuantity;
+            if (difference > 0) {
+              // Increase quantity
+              if (m.quantity >= m.soldQuantity + difference) {
+                m.soldQuantity += difference;
+                this.subTotal += difference * data?.salePrice;
+                this.total = this.subTotal - this.discount;
+              } else {
+                this.uiService.warn(
+                  "You can't add more quantity than available in stock"
+                );
+              }
+            } else if (difference < 0) {
+              // Decrease quantity
+              m.soldQuantity = newQuantity;
+              this.subTotal += difference * data?.salePrice;
+              this.total = this.subTotal - this.discount;
+            }
+          } else {
+            this.uiService.warn('Quantity cannot be less than zero');
+          }
+        }
+        return m;
+      });
     }
   }
 
@@ -378,20 +409,19 @@ export class NewSalesComponent implements OnInit {
           m.soldQuantity--;
 
           this.subTotal -= data?.salePrice;
-          this.total = this.subTotal - this.discount
+          this.total = this.subTotal - this.discount;
         }
       }
       return m;
-    })
+    });
   }
 
   deleteProduct(data: Product) {
-    console.log(data?.soldQuantity)
-    this.subTotal -= (data?.salePrice * data?.soldQuantity);
+    console.log(data?.soldQuantity);
+    this.subTotal -= data?.salePrice * data?.soldQuantity;
     this.total = this.subTotal - this.discount;
-    this.products = this.products.filter((m) => m._id != data._id)
+    this.products = this.products.filter((m) => m._id != data._id);
   }
-
 
   onChangeDiscount(event) {
     this.discount = event;
@@ -412,7 +442,6 @@ export class NewSalesComponent implements OnInit {
     console.log(this.disable);
   }
 
-
   /**
    * HANDLE SEARCH Area
    * onClickHeader()
@@ -426,7 +455,6 @@ export class NewSalesComponent implements OnInit {
    * handleCloseAndClear()
    * onSelectItem()
    */
-
 
   onClickHeader(): void {
     this.handleCloseOnly();
@@ -463,7 +491,7 @@ export class NewSalesComponent implements OnInit {
   }
 
   handleOpen(): void {
-    if (this.isOpen || this.isOpen && !this.isLoading) {
+    if (this.isOpen || (this.isOpen && !this.isLoading)) {
       return;
     }
     if (this.searchProducts.length > 0) {
@@ -508,7 +536,6 @@ export class NewSalesComponent implements OnInit {
     // this.router.navigate(['/product-details', data?._id]);
   }
 
-
   /**
    * COMPONENT DIALOG VIEW
    */
@@ -519,15 +546,14 @@ export class NewSalesComponent implements OnInit {
       minWidth: '750px',
       maxHeight: '90%',
       height: 'auto',
-      panelClass: ['my-custom-dialog-class', 'my-class']
+      panelClass: ['my-custom-dialog-class', 'my-class'],
     });
-    dialogRef.afterClosed().subscribe(dialogResult => {
+    dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult) {
         this.addNewSales(dialogResult.type);
       }
     });
   }
-
 
   /**
    * Invoice PDF
@@ -539,15 +565,17 @@ export class NewSalesComponent implements OnInit {
     const documentDefinition = await this.getInvoiceDocument(m);
 
     if (type === 'download') {
-      pdfMake.createPdf(documentDefinition).download(`Invoice_${m?.invoiceNo}.pdf`);
+      pdfMake
+        .createPdf(documentDefinition)
+        .download(`Invoice_${m?.invoiceNo}.pdf`);
     } else if (type === 'print') {
       pdfMake.createPdf(documentDefinition).print();
     } else {
-      pdfMake.createPdf(documentDefinition).download(`Invoice_${m?.invoiceNo}.pdf`);
+      pdfMake
+        .createPdf(documentDefinition)
+        .download(`Invoice_${m?.invoiceNo}.pdf`);
     }
-
   }
-
 
   private async getInvoiceDocument(m: NewSales) {
     console.log('invoice', m);
@@ -585,21 +613,21 @@ export class NewSalesComponent implements OnInit {
                   `Invoice ID: `,
                   {
                     text: m?.invoiceNo,
-                    bold: true
-                  }
+                    bold: true,
+                  },
                 ],
                 style: 'p',
-                alignment: 'right'
+                alignment: 'right',
               },
               {
                 width: '*',
                 text: `${this.utilsService.getDateString(m.soldDate, 'll')}`,
                 style: 'p',
-                alignment: 'right'
+                alignment: 'right',
               },
-            ]
+            ],
           ],
-          columnGap: 16
+          columnGap: 16,
         }, // END TOP INFO SECTION
         {
           canvas: [
@@ -610,9 +638,9 @@ export class NewSalesComponent implements OnInit {
               x2: 535,
               y2: 5,
               lineWidth: 0.5,
-              lineColor: '#E8E8E8'
-            }
-          ]
+              lineColor: '#E8E8E8',
+            },
+          ],
         }, // END TOP INFO BORDER
         {
           columns: [
@@ -656,11 +684,11 @@ export class NewSalesComponent implements OnInit {
                   `Customer Name: `,
                   {
                     text: m.customer ? m.customer?.name : 'n/a',
-                    bold: true
-                  }
+                    bold: true,
+                  },
                 ],
                 style: 'p',
-                margin: [0, 5, 0, 0]
+                margin: [0, 5, 0, 0],
               },
               {
                 width: 'auto',
@@ -668,8 +696,8 @@ export class NewSalesComponent implements OnInit {
                   `Customer Phone Number: `,
                   {
                     text: m.customer ? m.customer?.phone : 'n/a',
-                    bold: true
-                  }
+                    bold: true,
+                  },
                 ],
                 style: 'p',
               },
@@ -679,8 +707,8 @@ export class NewSalesComponent implements OnInit {
                   `Customer Address: `,
                   {
                     text: m.customer ? m.customer?.address : 'n/a',
-                    bold: true
-                  }
+                    bold: true,
+                  },
                 ],
                 style: 'p',
               },
@@ -691,13 +719,11 @@ export class NewSalesComponent implements OnInit {
               text: '',
             },
           ],
-          columnGap: 16
+          columnGap: 16,
         },
         {
           style: 'gapY',
-          columns: [
-            this.getItemTable(m),
-          ]
+          columns: [this.getItemTable(m)],
         }, // END ITEM TABLE SECTION
         {
           style: 'gapY',
@@ -707,10 +733,8 @@ export class NewSalesComponent implements OnInit {
               alignment: 'left',
               text: '',
             }, // Middle Space for Make Column Left & Right
-            [
-              this.getCalculationTable(m)
-            ]
-          ]
+            [this.getCalculationTable(m)],
+          ],
         }, // END CALCULATION SECTION
         {
           canvas: [
@@ -721,9 +745,9 @@ export class NewSalesComponent implements OnInit {
               x2: 535,
               y2: 5,
               lineWidth: 0.5,
-              lineColor: '#E8E8E8'
-            }
-          ]
+              lineColor: '#E8E8E8',
+            },
+          ],
         }, // END TOP INFO BORDER
         {
           style: 'gapXY',
@@ -740,17 +764,15 @@ export class NewSalesComponent implements OnInit {
                     y2: 5,
                     lineWidth: 1,
                     lineColor: '#767676',
-                  }
-                ]
+                  },
+                ],
               },
               {
                 width: 'auto',
-                text: [
-                  `Received By `,
-                ],
+                text: [`Received By `],
                 style: 'p',
-                margin: [22, 10]
-              }
+                margin: [22, 10],
+              },
             ],
             {
               width: '*',
@@ -769,27 +791,23 @@ export class NewSalesComponent implements OnInit {
                     y2: 5,
                     lineWidth: 1,
                     lineColor: '#767676',
-                  }
-                ]
+                  },
+                ],
               },
               {
                 width: '100',
-                text: [
-                  `Authorized By `,
-                ],
+                text: [`Authorized By `],
                 style: 'p',
                 alignment: 'right',
-                margin: [22, 10]
-              }
+                margin: [22, 10],
+              },
             ],
-
           ],
-
         },
         {
           width: '*',
           text: [
-            `CB, 209/1, Kachukhet Main Road, Dhaka Cantt. Dhaka-1206, Phone: 017625533/01762555544, sunelectronicsdhaka@gmail.com `
+            `CB, 209/1, Kachukhet Main Road, Dhaka Cantt. Dhaka-1206, Phone: 017625533/01762555544, sunelectronicsdhaka@gmail.com `,
           ],
           style: 'p',
           margin: [0, 60, 0, 0],
@@ -823,22 +841,22 @@ export class NewSalesComponent implements OnInit {
           text: 'Thank you for your purchase',
           style: 'p',
           alignment: 'center',
-          margin: [0, 10]
+          margin: [0, 10],
         },
       ],
-      styles: this.pdfMakeStyleObject
+      styles: this.pdfMakeStyleObject,
     };
-
 
     return documentObject;
   }
 
-
   async getProfilePicObjectPdf() {
     return {
-      image: await this.getBase64ImageFromURL('https://ftp.softlabit.com/uploads/logo/sun-pos.png'),
+      image: await this.getBase64ImageFromURL(
+        'https://ftp.softlabit.com/uploads/logo/sun-pos.png'
+      ),
       width: 200,
-      alignment: 'left'
+      alignment: 'left',
     };
   }
 
@@ -860,14 +878,13 @@ export class NewSalesComponent implements OnInit {
         resolve(dataURL);
       };
 
-      img.onerror = error => {
+      img.onerror = (error) => {
         reject(error);
       };
 
       img.src = url;
     });
   }
-
 
   dataTableForPdfMake(m: NewSales) {
     const tableHead = [
@@ -921,7 +938,7 @@ export class NewSalesComponent implements OnInit {
           borderColor: ['#eee', '#eee', '#eee', '#eee'],
         },
         {
-          text: `${s.name} (${s.model || ""}, ${s.others || ""})`,
+          text: `${s.name} (${s.model || ''}, ${s.others || ''})`,
           style: 'tableBody',
           borderColor: ['#eee', '#eee', '#eee', '#eee'],
         },
@@ -941,7 +958,7 @@ export class NewSalesComponent implements OnInit {
           borderColor: ['#eee', '#eee', '#eee', '#eee'],
         },
         {
-          text: (s.salePrice * s.soldQuantity),
+          text: s.salePrice * s.soldQuantity,
           style: 'tableBody',
           borderColor: ['#eee', '#eee', '#eee', '#eee'],
         },
@@ -950,18 +967,15 @@ export class NewSalesComponent implements OnInit {
       finalTableBody.push(res);
     });
 
-
     return finalTableBody;
-
   }
-
 
   getItemTable(m: NewSales) {
     return {
       table: {
         widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto'],
-        body: this.dataTableForPdfMake(m)
-      }
+        body: this.dataTableForPdfMake(m),
+      },
     };
   }
 
@@ -981,7 +995,7 @@ export class NewSalesComponent implements OnInit {
               text: `${m?.subTotal} TK`,
               style: 'tableBody',
               borderColor: ['#eee', '#eee', '#eee', '#eee'],
-            }
+            },
           ],
           [
             {
@@ -994,7 +1008,7 @@ export class NewSalesComponent implements OnInit {
               text: `${m?.discountAmount || 0} TK`,
               style: 'tableBody',
               borderColor: ['#eee', '#eee', '#eee', '#eee'],
-            }
+            },
           ],
           [
             {
@@ -1007,10 +1021,10 @@ export class NewSalesComponent implements OnInit {
               text: `${m?.total} TK`,
               style: 'tableBody',
               borderColor: ['#eee', '#eee', '#eee', '#eee'],
-            }
+            },
           ],
-        ]
-      }
+        ],
+      },
     };
   }
 
@@ -1021,7 +1035,7 @@ export class NewSalesComponent implements OnInit {
       },
       pBn: {
         fontSize: 9,
-        lineHeight: 2
+        lineHeight: 2,
       },
       tableHead: {
         fontSize: 9,
@@ -1033,15 +1047,13 @@ export class NewSalesComponent implements OnInit {
         margin: [5, 2],
       },
       gapY: {
-        margin: [0, 8]
+        margin: [0, 8],
       },
       gapXY: {
-        margin: [0, 40]
-      }
-
+        margin: [0, 40],
+      },
     };
   }
-
 
   /**
    * ON DESTROY

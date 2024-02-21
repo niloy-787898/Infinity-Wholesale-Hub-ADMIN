@@ -51,7 +51,7 @@ const routes: Routes = [
       {
         path: 'admin-control',
         loadChildren: () => import('./admin-control/admin-control.module').then(m => m.AdminControlModule),
-        // canActivate: [CheckAuthAccessGuard]
+        canActivate: [CheckAuthAccessGuard]
       }
     ]
   }

@@ -9,6 +9,7 @@ import {PreOrderAddComponent} from "./pre-order-add/pre-order-add.component";
 import {PreOrderListComponent} from "./pre-order-list/pre-order-list.component";
 import {MySalesReportComponent} from "./my-sales-report/my-sales-report.component";
 import { SalesListMonthComponent } from './sales-list-month/sales-list-month.component';
+import { SalesInvoicePrintByIdComponent } from './sales-invoice-print-by-id/sales-invoice-print-by-id.component';
 
 const routes: Routes = [
   {path: '', component: SalesComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'edit-sales-return/:id', component: NewSalesReturnComponent},
   {path: 'new-sales', component: NewSalesComponent},
   {path: 'new-sales/:id', component: NewSalesComponent},
+  {path: 'new-sales-view/:id', component: SalesInvoicePrintByIdComponent},
   {path: 'return-sales', component: ReturnSalesComponent},
   {path: 'pre-order', component: PreOrderAddComponent},
   {path: 'pre-order/:id', component: PreOrderAddComponent},

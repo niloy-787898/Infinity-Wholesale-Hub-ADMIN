@@ -1,0 +1,85 @@
+<section class="page-list">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Invoice View</h4>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="printSection('printSection')"
+      type="button"
+    >
+      <mat-icon>print</mat-icon>
+      Print Invoice
+    </button>
+  </div>
+</section>
+
+<div class="main" id="printSection">
+  <div class="top">
+    <div class="image-logo">
+      <img src="/assets/brand/Dm%20Logo%20color%20teans.png" alt="brand logo" />
+      <p><span>Invoice Number</span>: {{ newSales?.invoiceNo }}</p>
+    </div>
+    <div class="text-Invoice">
+      <h2>Infinity Wholesale Hub</h2>
+      <p>191, Tejkunupara, Tejgaon</p>
+      <p>Dhaka-1215, Bangladesh</p>
+    </div>
+  </div>
+  <div class="line"></div>
+  <div class="customer-info" *ngIf="newSales?.customer">
+    <h5>Customer Info:</h5>
+    <p><span>Name</span>: {{ newSales?.customer?.name }}</p>
+    <p>
+      <span>Phone No</span>:
+      {{ newSales?.customer?.phone }}
+    </p>
+    <p>
+      <span>Address</span>:
+      {{ newSales?.customer?.address }}
+    </p>
+  </div>
+
+  <div class="table-responsive">
+    <table>
+      <tr class="table-row">
+        <th>Product Image</th>
+        <th>Product Name</th>
+        <th>QTY</th>
+        <th>Price</th>
+      </tr>
+      <tr *ngFor="let product of newSales?.products">
+        <td class="product-img">
+          <img [src]="product?.images ? product?.images[0] : ''" />
+        </td>
+        <td>{{ product?.name }}</td>
+        <td>{{ product?.soldQuantity }}</td>
+        <td>৳{{ product?.salePrice }}</td>
+      </tr>
+    </table>
+    <div class="table">
+      <table class="total-order">
+        <tr>
+          <td>Sub Total</td>
+          <td class="number-color">
+            ৳{{ newSales?.subTotal | number : "" : "bn" }}
+          </td>
+        </tr>
+        <tr>
+          <td>Discount</td>
+          <td class="number-color">
+            ৳{{ newSales?.discountAmount | number : "" : "bn" }}
+          </td>
+        </tr>
+        <tr>
+          <td class="total">Grand Total</td>
+          <td class="number-color">
+            ৳{{ newSales?.total | number : "" : "bn" }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

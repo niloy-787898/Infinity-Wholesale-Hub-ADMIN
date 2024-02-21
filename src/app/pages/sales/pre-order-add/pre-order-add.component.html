@@ -1,8 +1,8 @@
 <section class="add-list">
   <div class="page-header">
     <div class="page-title">
-      <h4>New Pre Order</h4>
-      <h6>Add/Update Pre Order</h6>
+      <h4>New Order</h4>
+      <h6>Add/Update Order</h6>
     </div>
   </div>
 </section>
@@ -14,136 +14,108 @@
   (outsideClick)="handleOutsideClick()"
 >
   <div class="area-border">
+    <h2 class="">Customer Details</h2>
     <div class="grid">
-      <div class="from form-1">
-        <app-customer-search-field
-          (onSelect)="onSelectCustomerList($event)"
-        ></app-customer-search-field>
-
-        <div class="add-icon">
-          <a
-            (click)="customerInfoToggle()"
-            [class]="customerInfo ? 'active' : ''"
-          ><img
-            [src]="
-                customerInfo
-                  ? 'https://dreamspos.dreamguystech.com/html/template/assets/img/icons/closes.svg'
-                  : './assets/images/svg/plus1.svg'
-              "
-            alt="img"
-          /></a>
+      <form
+        #formElement="ngForm"
+        [formGroup]="dataForm"
+        class="grid"
+        style="margin-bottom: 20px"
+      >
+        <div class="from">
+          <mat-label>Customer Name</mat-label>
+          <mat-form-field appearance="outline" class="form-field">
+            <input formControlName="name" matInput />
+            <mat-error>This field is required</mat-error>
+          </mat-form-field>
         </div>
-      </div>
-      <div class="from">
-        <mat-label>Advance Amount</mat-label>
-        <mat-form-field appearance="outline">
-          <input [ngModel]="advanceAmount"
-                 (ngModelChange)="onChangeAdvanceAmount($event)" type="number" matInput digitOnly />
-        </mat-form-field>
-      </div>
-      <div class="from">
-        <mat-label>Sold Date</mat-label>
-        <mat-form-field appearance="outline">
-          <input matInput [matDatepicker]="picker" placeholder="DD-MM-YYYY"
-                 [ngModel]="soldDate"
-                 disabled
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
+        <div class="from">
+          <mat-label>Customer Phone No</mat-label>
+          <mat-form-field appearance="outline" class="form-field">
+            <input formControlName="phone" matInput />
+            <mat-error>This field is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="from">
+          <mat-label>Customer Address</mat-label>
+          <mat-form-field appearance="outline" class="form-field">
+            <input formControlName="address" matInput />
+            <mat-error>This field is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="from">
+          <mat-label>Sold Date</mat-label>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="DD-MM-YYYY"
+              [ngModel]="soldDate"
+              disabled
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </form>
     </div>
 
-    <form
-      [style.display]="customer || customerInfo ? 'grid' : 'none'"
-      #formElement="ngForm"
-      [formGroup]="dataForm"
-      class="grid"
-      style="margin-bottom: 20px"
-    >
-      <div class="from">
-        <mat-label>Customer Name</mat-label>
-        <mat-form-field appearance="outline" class="form-field">
-          <input formControlName="name" matInput />
-          <mat-error>This field is required</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="from">
-        <mat-label>Customer Phone No</mat-label>
-        <mat-form-field appearance="outline" class="form-field">
-          <input formControlName="phone" matInput />
-          <mat-error>This field is required</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="from">
-        <mat-label>Customer Address</mat-label>
-        <mat-form-field appearance="outline" class="form-field">
-          <input formControlName="address" matInput />
-          <mat-error>This field is required</mat-error>
-        </mat-form-field>
-      </div>
-      <!--      <div class="disable-btn">-->
-      <!--        <button mat-button type="submit" style="background-color: #FE820E;">-->
-      <!--          Add New Customer-->
-      <!--        </button>-->
-      <!--      </div>-->
-    </form>
-
     <app-product-search-filed (onSelect)="onSelectProduct($event)">
-
     </app-product-search-filed>
 
-    <div class="container" *ngIf="products.length>0">
+    <div class="container" *ngIf="products.length > 0">
       <div class="table-responsive">
         <table>
           <thead>
-          <tr class="table-row">
-            <th>Product Name</th>
-            <th>QTY</th>
-            <th>Sales Price($)</th>
-            <th>Total</th>
-            <th>Action</th>
-          </tr>
+            <tr class="table-row">
+              <th>Product Name</th>
+              <th>QTY</th>
+              <th>Sales Price($)</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let data of products">
-            <td class="productimage">
-              <a class="product-text">{{data.name}}</a>
-            </td>
-            <td>
-              <div class="quantity">
-                <div>
-                  <button type="button" (click)="decreseQuantity(data)">
-                    <i class="fa fa-minus"></i>
-                  </button>
+            <tr *ngFor="let data of products">
+              <td class="productimage">
+                <a class="product-text">{{ data.name }}</a>
+              </td>
+              <td>
+                <div class="quantity">
+                  <div>
+                    <button type="button" (click)="decreseQuantity(data)">
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                  <div>
+                    <input type="text" value="{{ data?.soldQuantity }}" />
+                  </div>
+                  <div>
+                    <button type="button" (click)="increaseQuantity(data)">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <input type="text" value="{{ data?.soldQuantity }}" />
-                </div>
-                <div>
-                  <button type="button" (click)="increaseQuantity(data)">
-                    <i class="fa fa-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </td>
+              </td>
 
-            <td>{{ data?.salePrice }}</td>
-            <td>{{ data?.salePrice * data.soldQuantity }}</td>
-            <td><div class="delete-area">
-              <button
-                mat-stroked-button
-                color="warn"
-                matTooltip="Delete"
-                (click)="deleteProduct(data)"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div></td>
-          </tr>
+              <td>{{ data?.salePrice }}</td>
+              <td>{{ data?.salePrice * data.soldQuantity }}</td>
+              <td>
+                <div class="delete-area">
+                  <button
+                    mat-stroked-button
+                    color="warn"
+                    matTooltip="Delete"
+                    (click)="deleteProduct(data)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -161,7 +133,6 @@
             type="number"
             [ngModel]="discount"
             (ngModelChange)="onChangeDiscount($event)"
-
           />
         </mat-form-field>
       </div>
@@ -170,15 +141,15 @@
       <table class="total-order">
         <tr>
           <td>Sub Total</td>
-          <td class="number-color">{{ subTotal | number:'':'bn' }} TK</td>
+          <td class="number-color">{{ subTotal | number : "" : "bn" }} TK</td>
         </tr>
         <tr>
           <td>Discount</td>
-          <td class="number-color">{{ discount | number:'':'bn' }} TK</td>
+          <td class="number-color">{{ discount | number : "" : "bn" }} TK</td>
         </tr>
         <tr>
           <td class="total">Grand Total</td>
-          <td class="number-color">{{ total | number:'':'bn' }}</td>
+          <td class="number-color">{{ total | number : "" : "bn" }}</td>
         </tr>
       </table>
     </div>
@@ -201,4 +172,3 @@
     </div>
   </div>
 </section>
-

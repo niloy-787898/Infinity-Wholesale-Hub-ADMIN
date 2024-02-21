@@ -30,13 +30,6 @@ export class ProductService {
    * deleteMultipleProductById
    */
 
-  // getAllCategories(filterData: FilterData, searchQuery?: string) {
-  //   let params = new HttpParams();
-  //   if (searchQuery) {
-  //     params = params.append('q', searchQuery);
-  //   }
-  //   return this.httpClient.post<{ data: Product[], count: number, success: boolean }>(API_SUB_CATEGORY + 'get-all', filterData, {params});
-  // }
 
   addProduct(data: Product): Observable<ResponsePayload> {
     return this.httpClient.post<ResponsePayload>(API_PRODUCT + 'add', data);
