@@ -24,6 +24,8 @@ export class SalesInvoicePrintByIdComponent implements OnInit {
   customerInfo = false;
   search = false;
   discount: number = 0;
+  discountPercent: number = 0;
+  shippingCharge: number = 0;
   subTotal: number = 0;
   total: number = 0;
   soldDate: Date = new Date();
@@ -59,6 +61,8 @@ export class SalesInvoicePrintByIdComponent implements OnInit {
           this.subTotal = this.newSales.subTotal;
           this.total = this.newSales.total;
           this.discount = this.newSales.discountAmount;
+          this.discountPercent = this.newSales.discountPercent;
+          this.shippingCharge = this.newSales.shippingCharge;
           console.log(this.newSales);
         }
       },

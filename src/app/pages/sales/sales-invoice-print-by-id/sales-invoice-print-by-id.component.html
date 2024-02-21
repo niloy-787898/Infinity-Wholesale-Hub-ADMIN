@@ -47,6 +47,7 @@
       <tr class="table-row">
         <th>Product Image</th>
         <th>Product Name</th>
+        <th>Product Code</th>
         <th>QTY</th>
         <th>Price</th>
       </tr>
@@ -55,6 +56,7 @@
           <img [src]="product?.images ? product?.images[0] : ''" />
         </td>
         <td>{{ product?.name }}</td>
+        <td>{{ product?.sku }}</td>
         <td>{{ product?.soldQuantity }}</td>
         <td>৳{{ product?.salePrice }}</td>
       </tr>
@@ -71,6 +73,18 @@
           <td>Discount</td>
           <td class="number-color">
             ৳{{ newSales?.discountAmount | number : "" : "bn" }}
+          </td>
+        </tr>
+        <tr>
+          <td>Discount In Percentage</td>
+          <td class="number-color">
+            {{ newSales?.discountPercent | number : "" : "bn" }} %  ( ৳ {{ (newSales.discountPercent / 100) * newSales.subTotal | number : "" : "bn" || "-" }} )
+          </td>
+        </tr>
+        <tr>
+          <td>Discount</td>
+          <td class="number-color">
+            ৳{{ newSales?.shippingCharge | number : "" : "bn" }}
           </td>
         </tr>
         <tr>

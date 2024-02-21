@@ -12,6 +12,8 @@ export interface NewSales {
   subTotal?: number;
   total?: number;
   discountAmount?: number;
+  discountPercent?: number;
+  shippingCharge?: number;
   status?: string;
   createdAt?: Date;
   updatedAt?: Date;

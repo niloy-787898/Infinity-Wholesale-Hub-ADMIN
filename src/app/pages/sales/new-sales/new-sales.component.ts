@@ -57,6 +57,8 @@ export class NewSalesComponent implements OnInit {
   customerInfo = false;
   search = false;
   discount: number = 0;
+  discountPercent: number = 0;
+  shippingCharge: number = 0;
   subTotal: number = 0;
   total: number = 0;
   soldDate: Date = new Date();
@@ -151,6 +153,8 @@ export class NewSalesComponent implements OnInit {
       products: this.products,
       soldDate: this.soldDate,
       discountAmount: this.discount,
+      discountPercent: this.discountPercent,
+      shippingCharge: this.shippingCharge,
       total: this.total,
       subTotal: this.subTotal,
       totalPurchasePrice: totalPurchasePrice,
@@ -229,6 +233,8 @@ export class NewSalesComponent implements OnInit {
       products: this.products,
       soldDate: this.soldDate,
       discountAmount: this.discount,
+      discountPercent: this.discountPercent,
+      shippingCharge: this.shippingCharge,
       total: this.total,
       subTotal: this.subTotal,
       totalPurchasePrice: totalPurchasePrice,
@@ -244,6 +250,8 @@ export class NewSalesComponent implements OnInit {
           this.formElement.resetForm();
           this.products = [];
           this.discount = 0;
+          this.discountPercent = 0;
+          this.shippingCharge = 0;
           this.total = 0;
           this.subTotal = 0;
           mData['invoiceNo'] = res.data.invoiceNo;
@@ -288,6 +296,8 @@ export class NewSalesComponent implements OnInit {
             this.subTotal = this.newSales.subTotal;
             this.total = this.newSales.total;
             this.discount = this.newSales.discountAmount;
+            this.discountPercent = this.newSales.discountPercent;
+            this.shippingCharge = this.newSales.shippingCharge;
             console.log(this.newSales);
             this.setFormValue();
           }
@@ -307,6 +317,8 @@ export class NewSalesComponent implements OnInit {
       products: this.products,
       soldDate: this.soldDate,
       discountAmount: this.discount,
+      discountPercent : this.discountPercent,
+      shippingCharge : this.shippingCharge,
       total: this.total,
       subTotal: this.subTotal,
       invoiceNo: this.newSales.invoiceNo,
@@ -336,6 +348,15 @@ export class NewSalesComponent implements OnInit {
    * onSelectCustomerList()
    * onSelectProduct()
    */
+  calculateTotal() {
+    // Calculate the value of the percentage discount
+    const percentageDiscountValue = (this.discountPercent / 100) * this.subTotal;
+
+    // Apply both discounts and shipping charge to calculate the total
+    // Ensure to not allow the total to become negative
+    this.total = Math.max(0, this.subTotal - this.discount - percentageDiscountValue + this.shippingCharge);
+  }
+
 
   onSelectCustomerList(data: Customer) {
     this.customer = data;
@@ -343,9 +364,10 @@ export class NewSalesComponent implements OnInit {
     console.log('this.customer', this.customer);
   }
 
+
   onSelectProduct(data: Product) {
     this.subTotal += data?.salePrice;
-    this.total = this.subTotal - this.discount;
+    this.calculateTotal();
     this.products.push({ ...data, ...{ soldQuantity: 1 } });
   }
 
@@ -359,7 +381,7 @@ export class NewSalesComponent implements OnInit {
           if (m.quantity > m.soldQuantity) {
             m.soldQuantity++;
             this.subTotal += data?.salePrice;
-            this.total = this.subTotal - this.discount;
+            this.calculateTotal();
           } else {
             this.uiService.warn("You can't add more quantity");
           }
@@ -381,7 +403,7 @@ export class NewSalesComponent implements OnInit {
               if (m.quantity >= m.soldQuantity + difference) {
                 m.soldQuantity += difference;
                 this.subTotal += difference * data?.salePrice;
-                this.total = this.subTotal - this.discount;
+                this.calculateTotal();
               } else {
                 this.uiService.warn(
                   "You can't add more quantity than available in stock"
@@ -391,7 +413,7 @@ export class NewSalesComponent implements OnInit {
               // Decrease quantity
               m.soldQuantity = newQuantity;
               this.subTotal += difference * data?.salePrice;
-              this.total = this.subTotal - this.discount;
+              this.calculateTotal();
             }
           } else {
             this.uiService.warn('Quantity cannot be less than zero');
@@ -409,7 +431,7 @@ export class NewSalesComponent implements OnInit {
           m.soldQuantity--;
 
           this.subTotal -= data?.salePrice;
-          this.total = this.subTotal - this.discount;
+          this.calculateTotal();
         }
       }
       return m;
@@ -419,19 +441,34 @@ export class NewSalesComponent implements OnInit {
   deleteProduct(data: Product) {
     console.log(data?.soldQuantity);
     this.subTotal -= data?.salePrice * data?.soldQuantity;
-    this.total = this.subTotal - this.discount;
+    this.calculateTotal();
     this.products = this.products.filter((m) => m._id != data._id);
   }
 
   onChangeDiscount(event) {
     this.discount = event;
-    this.total = this.subTotal - this.discount;
+    this.calculateTotal();
 
     if (event >= this.subTotal) {
       this.discount = this.subTotal;
     }
   }
+  onChangeDiscountInPercentage(event) {
+    this.discountPercent = event;
+    this.calculateTotal();
 
+    if (event >= this.subTotal) {
+      this.discountPercent = this.subTotal;
+    }
+  }
+  onChangeShippingCharge(event) {
+    this.shippingCharge = event;
+    this.calculateTotal();
+
+    if (event >= this.subTotal) {
+      this.shippingCharge = this.subTotal;
+    }
+  }
   onSoldDateChange(event) {
     console.log(event);
   }

@@ -149,6 +149,36 @@
           />
         </mat-form-field>
       </div>
+      <div class="from"></div>
+      <div class="from"></div>
+      <div class="from"></div>
+      <div class="from down">
+        <mat-label>Discount In Percent</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input
+            matInput
+            type="number"
+            [ngModel]="discountPercent"
+            (ngModelChange)="onChangeDiscountInPercentage($event)"
+          />
+        </mat-form-field>
+      </div>
+      <div class="from"></div>
+      <div class="from"></div>
+      <div class="from"></div>
+      <div class="from down">
+        <mat-label>Shipping Charge</mat-label>
+        <mat-form-field appearance="outline">
+          <!-- <mat-label>Name</mat-label> -->
+          <input
+            matInput
+            type="number"
+            [ngModel]="shippingCharge"
+            (ngModelChange)="onChangeShippingCharge($event)"
+          />
+        </mat-form-field>
+      </div>
     </div>
     <div class="table">
       <table class="total-order">
@@ -159,6 +189,14 @@
         <tr>
           <td>Discount</td>
           <td class="number-color">৳{{ discount | number : "" : "bn" }}</td>
+        </tr>
+        <tr>
+          <td>Discount In Percentage</td>
+          <td class="number-color">৳{{ (discountPercent / 100) * subTotal | number : "" : "bn" }}</td>
+        </tr>
+        <tr>
+          <td>Shipping Charge</td>
+          <td class="number-color">৳{{ shippingCharge | number : "" : "bn" }}</td>
         </tr>
         <tr>
           <td class="total">Grand Total</td>

@@ -14,7 +14,7 @@
 }
 
 .down {
-  margin-top: 30px;
+  margin-top: 0px;
 }
 
 .table {
@@ -128,6 +128,12 @@
 ::ng-deep.form-field .mat-form-field-wrapper {
   padding: 0px;
   margin: 0px;
+}
+::ng-deep.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin:  0 !important;
+}
+::ng-deep.mat-form-field-wrapper {
+  padding-bottom:  0 !important;
 }
 
 .search-area,

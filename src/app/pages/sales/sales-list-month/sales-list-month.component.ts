@@ -203,6 +203,8 @@ export class SalesListMonthComponent implements OnInit {
             products: 1,
             subTotal: 1,
             discountAmount: 1,
+            discountPercent: 1,
+            shippingCharge : 1
           };
 
           const filterData: FilterData = {
@@ -282,6 +284,8 @@ export class SalesListMonthComponent implements OnInit {
         products: 1,
         subTotal: 1,
         discountAmount: 1,
+        discountPercent: 1,
+        shippingCharge : 1
       },
       sort: { createdAt: -1 },
     };

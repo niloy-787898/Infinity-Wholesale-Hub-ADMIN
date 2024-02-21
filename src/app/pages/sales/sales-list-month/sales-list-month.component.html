@@ -293,6 +293,8 @@
               <th>Sold Date</th>
               <th>Sub Total</th>
               <th>Discount</th>
+              <th>Discount In Percent</th>
+              <th>Shipping Charge</th>
               <th>Grand Total</th>
               <th>Action</th>
             </tr>
@@ -313,6 +315,8 @@
               <td>{{ data?.soldDate | date }}</td>
               <td>৳{{ data?.subTotal | number : "" : "bn" || "-" }}</td>
               <td>৳{{ data?.discountAmount | number : "" : "bn" || "-" }}</td>
+              <td>৳{{ (data.discountPercent / 100) * data.subTotal | number : "" : "bn" || "-" }}</td>
+              <td>৳{{ data?.shippingCharge | number : "" : "bn" || "-" }}</td>
               <td>৳{{ data?.total | number : "" : "bn" || "-" }}</td>
               <td class="button">
                 <button
@@ -345,6 +349,9 @@
               </td>
             </tr>
             <tr class="table-hover" style="background: #fff5ea">
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
