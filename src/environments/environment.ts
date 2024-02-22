@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  name: 'Dokan Manager',
-  domain: 'employee.softlabit.com',
+  name: 'Infinity Warehouse Hub',
+  domain: 'infinitywarehousehub.com',
   apiBaseLink: 'http://localhost:1014',
   ftpBaseLink: 'http://localhost:1014',
   // apiBaseLink: 'https://api.dokanmanager.com',

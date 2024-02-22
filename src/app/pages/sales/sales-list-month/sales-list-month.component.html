@@ -296,6 +296,7 @@
               <th>Discount In Percent</th>
               <th>Shipping Charge</th>
               <th>Grand Total</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
             <tr *ngFor="let data of data.data" class="table-hover">
@@ -318,6 +319,7 @@
               <td>৳{{ (data.discountPercent / 100) * data.subTotal | number : "" : "bn" || "-" }}</td>
               <td>৳{{ data?.shippingCharge | number : "" : "bn" || "-" }}</td>
               <td>৳{{ data?.total | number : "" : "bn" || "-" }}</td>
+              <td>{{ data?.status }}</td>
               <td class="button">
                 <button
                   mat-mini-fab
@@ -362,6 +364,7 @@
               <td style="font-weight: bold">
                 ৳{{ getSum(data.data) | number : "" : "bn" || "-" }}
               </td>
+              <td></td>
               <td></td>
             </tr>
           </table>

@@ -49,8 +49,11 @@ export class NewSalesComponent implements OnInit {
   @ViewChild('searchForm') searchForm: NgForm;
   @ViewChild('searchInput') searchInput: ElementRef;
 
+  statusOptions: string[] = ['Pending','Hold', 'Ready for Shipping', 'Completed', 'Canceled']; // Assume this is fetched from the backend
+
   // Store Data
   id?: string;
+  status?: string;
   newSales?: NewSales;
   customers?: Customer[] = [];
   customer: Customer;
@@ -160,6 +163,7 @@ export class NewSalesComponent implements OnInit {
       totalPurchasePrice: totalPurchasePrice,
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
+      status: this.status,
     };
 
     if (this.newSales) {
@@ -179,6 +183,9 @@ export class NewSalesComponent implements OnInit {
 
   customerInfoToggle() {
     this.customerInfo = !this.customerInfo;
+  }
+  onStatusChange(status: string) {
+    this.status = status;
   }
 
   /**
@@ -240,6 +247,7 @@ export class NewSalesComponent implements OnInit {
       totalPurchasePrice: totalPurchasePrice,
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
+      status: this.status, // Use the selected status here
     };
 
     this.subDataFive = this.newSalesService.addNewSales(mData).subscribe({
@@ -317,11 +325,12 @@ export class NewSalesComponent implements OnInit {
       products: this.products,
       soldDate: this.soldDate,
       discountAmount: this.discount,
-      discountPercent : this.discountPercent,
-      shippingCharge : this.shippingCharge,
+      discountPercent: this.discountPercent,
+      shippingCharge: this.shippingCharge,
       total: this.total,
       subTotal: this.subTotal,
       invoiceNo: this.newSales.invoiceNo,
+      status: this.status, // Use the selected status here
     };
 
     this.subDataFour = this.newSalesService
@@ -350,20 +359,25 @@ export class NewSalesComponent implements OnInit {
    */
   calculateTotal() {
     // Calculate the value of the percentage discount
-    const percentageDiscountValue = (this.discountPercent / 100) * this.subTotal;
+    const percentageDiscountValue =
+      (this.discountPercent / 100) * this.subTotal;
 
     // Apply both discounts and shipping charge to calculate the total
     // Ensure to not allow the total to become negative
-    this.total = Math.max(0, this.subTotal - this.discount - percentageDiscountValue + this.shippingCharge);
+    this.total = Math.max(
+      0,
+      this.subTotal -
+        this.discount -
+        percentageDiscountValue +
+        this.shippingCharge
+    );
   }
-
 
   onSelectCustomerList(data: Customer) {
     this.customer = data;
     this.dataForm.patchValue(this.customer);
     console.log('this.customer', this.customer);
   }
-
 
   onSelectProduct(data: Product) {
     this.subTotal += data?.salePrice;

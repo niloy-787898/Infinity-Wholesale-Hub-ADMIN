@@ -133,7 +133,22 @@
         </table>
       </div>
     </div>
+
+
+
+
     <div class="grid">
+      <div class="from"></div>
+      <div class="from"></div>
+      <div class="from"></div>
+      <div class="form-down">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(value)]="status">
+            <mat-option *ngFor="let option of statusOptions" [value]="option">{{ option }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <div class="from"></div>
       <div class="from"></div>
       <div class="from"></div>

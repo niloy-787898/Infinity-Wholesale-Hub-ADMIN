@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -11,10 +12,12 @@ import { NewSalesService } from 'src/app/services/common/new-sales.service';
   selector: 'app-sales-invoice-print-by-id',
   templateUrl: './sales-invoice-print-by-id.component.html',
   styleUrls: ['./sales-invoice-print-by-id.component.scss'],
+  providers: [DatePipe]
 })
 export class SalesInvoicePrintByIdComponent implements OnInit {
   // Subscriptions
   private subDataOne: Subscription;
+  currentDate:any = new Date();
 
   // Store Data
   id?: string;
@@ -36,8 +39,11 @@ export class SalesInvoicePrintByIdComponent implements OnInit {
   constructor(
     private spinnerService: NgxSpinnerService,
     private activatedRoute: ActivatedRoute,
-    private newSalesService: NewSalesService
-  ) {}
+    private newSalesService: NewSalesService,
+    private datePipe: DatePipe
+  ) {
+    this.currentDate = this.datePipe.transform(this.currentDate, 'medium');
+  }
 
   ngOnInit() {
     // GET ID FORM PARAM

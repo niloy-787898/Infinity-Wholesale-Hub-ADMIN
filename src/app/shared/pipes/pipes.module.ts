@@ -7,8 +7,8 @@ import {SecToTimePipe} from './sec-to-time.pipe';
 @NgModule({
   declarations: [
     NumberMinDigitPipe,
-    SecToTimePipe,
-  ],
+    SecToTimePipe
+   ],
   imports: [
     CommonModule
   ],

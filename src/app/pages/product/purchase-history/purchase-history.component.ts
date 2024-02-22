@@ -24,8 +24,6 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { Brand } from '../../../interfaces/common/brand.interface';
-import { BrandService } from '../../../services/common/brand.service';
 import { Admin } from 'src/app/interfaces/admin/admin';
 import { AdminDataService } from 'src/app/services/admin/admin-data.service';
 import { Select } from 'src/app/interfaces/core/select';
@@ -49,7 +47,6 @@ export class PurchaseHistoryComponent implements OnInit {
   toggleMenu: boolean = false;
   id?: string;
   productPurchases: ProductPurchaseGroup[] = [];
-  brands: Brand[] = [];
   newSalesCount = 0;
   salesmans: Admin[] = [];
   isLoading: boolean = true;
@@ -101,7 +98,6 @@ export class PurchaseHistoryComponent implements OnInit {
 
   constructor(
     private customerService: CustomerService,
-    private brandService: BrandService,
     private newSalesService: NewSalesService,
     private uiService: UiService,
     private router: Router,
@@ -146,7 +142,6 @@ export class PurchaseHistoryComponent implements OnInit {
       this.filter = { ...this.filter, ...qData };
       this.setDefaultFilter();
       this.getAllNewSales();
-      this.getAllBrands();
       this.getAllSalesman();
     });
   }
@@ -338,31 +333,6 @@ export class PurchaseHistoryComponent implements OnInit {
       },
     });
   }
-
-  private getAllBrands() {
-    // Select
-    const mSelect = {
-      name: 1,
-    };
-
-    const filterData: FilterData = {
-      pagination: null,
-      filter: null,
-      select: mSelect,
-      sort: { name: 1 },
-    };
-
-    this.subDataThree = this.brandService
-      .getAllBrands(filterData, null)
-      .subscribe({
-        next: (res) => {
-          this.brands = res.data;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-  }
   private getAllSalesman() {
     // Select
     const mSelect = {
@@ -492,11 +462,6 @@ export class PurchaseHistoryComponent implements OnInit {
 
   filterData(value: any, index: number, type: string) {
     switch (type) {
-      case 'brand': {
-        this.filter = { ...this.filter, ...{ 'brand._id': value } };
-        this.activeFilter2 = index;
-        break;
-      }
       case 'salesman': {
         this.filter = { ...this.filter, ...{ 'salesman._id': value } };
         this.activeFilter2 = index;

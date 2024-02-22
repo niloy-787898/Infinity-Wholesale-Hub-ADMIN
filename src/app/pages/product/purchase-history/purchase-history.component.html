@@ -293,9 +293,12 @@
                 ></mat-checkbox>
               </th>
               <th>Product</th>
-              <th>Previous Quantity</th>
+              <th>Code</th>
               <th>Quantity(+/-)</th>
               <th>Purchase Price</th>
+              <th>Selling Price</th>
+              <th>Estimate cost</th>
+              <th>Estimate Profit</th>
               <th>Total Purchase</th>
             </tr>
             <tr *ngFor="let data of data.data" class="table-hover">
@@ -306,10 +309,13 @@
                   (ngModelChange)="onCheckChange($event, i, data._id)"
                 ></mat-checkbox>
               </td>
-              <td>{{ data?.product.name }} ({{ data?.product?.model ? data?.product?.model: ''}}{{ data?.product?.others ? ','+data?.product?.others: ''}}{{ data?.product?.sku ? ','+data?.product?.sku: ''}})</td>
-              <td>{{ data?.previousQuantity || "-" }}</td>
-              <td>{{ (data?.updatedQuantity - data?.previousQuantity) || "-"}}</td>
+              <td>{{ data?.product.name }} </td>
+              <td>{{ data?.product.sku || "-" }}</td>
+              <td>{{ data?.updatedQuantity  || "-"}}</td>
               <td>৳{{ data?.product?.purchasePrice  | number : "" : "bn" || "-"}}</td>
+              <td>৳{{ data?.product?.salePrice  | number : "" : "bn" || "-"}}</td>
+              <td>৳{{ (data?.updatedQuantity * data?.product?.purchasePrice ) | number : "" : "bn" || "-"}}</td>
+              <td>৳{{ (data?.updatedQuantity * data?.product?.salePrice ) | number : "" : "bn" || "-"}}</td>
               <td>৳
                 {{ data?.product?.purchasePrice * (data?.updatedQuantity - data?.previousQuantity) | number : "" : "bn" || "-" }}</td>
 <!--              <td class="button">-->
@@ -337,7 +343,9 @@
               <td></td>
               <td></td>
               <td></td>
-
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
               <td style="font-weight: bold">

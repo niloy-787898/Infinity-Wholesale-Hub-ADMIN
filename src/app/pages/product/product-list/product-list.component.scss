@@ -13,7 +13,11 @@
     border-radius: 10px;
   }
 }
-
+.product-img{
+  img{
+    height: 40px !important;
+  }
+}
 .hiddenInput{
   display: none;
 }

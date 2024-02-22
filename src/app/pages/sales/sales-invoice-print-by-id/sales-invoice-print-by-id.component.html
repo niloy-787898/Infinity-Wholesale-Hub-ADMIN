@@ -19,8 +19,12 @@
 <div class="main" id="printSection">
   <div class="top">
     <div class="image-logo">
-      <img src="/assets/brand/Dm%20Logo%20color%20teans.png" alt="brand logo" />
+      <img src="/assets/brand/Infinity-wh.png" alt="brand logo" />
       <p><span>Invoice Number</span>: {{ newSales?.invoiceNo }}</p>
+      <p>
+        <span>Invoice Date</span>:
+        {{ currentDate }}
+      </p>
     </div>
     <div class="text-Invoice">
       <h2>Infinity Wholesale Hub</h2>
@@ -78,7 +82,12 @@
         <tr>
           <td>Discount In Percentage</td>
           <td class="number-color">
-            {{ newSales?.discountPercent | number : "" : "bn" }} %  ( ৳ {{ (newSales.discountPercent / 100) * newSales.subTotal | number : "" : "bn" || "-" }} )
+            {{ newSales?.discountPercent | number : "" : "bn" }} % ( ৳
+            {{
+              (newSales.discountPercent / 100) * newSales.subTotal
+                | number : "" : "bn" || "-"
+            }}
+            )
           </td>
         </tr>
         <tr>

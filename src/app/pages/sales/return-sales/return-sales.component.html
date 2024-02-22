@@ -164,8 +164,8 @@
             </th>
             <th>Invoice ID</th>
             <th>Customer Phone No</th>
-            <th>Salesman</th>
-            <th>Sold Date</th>
+            <!-- <th>Salesman</th>
+            <th>Sold Date</th> -->
             <th>Sub Total</th>
             <th>Total</th>
             <th>Discount</th>
@@ -193,8 +193,8 @@
             </td>
             <td>{{ data?.invoiceNo }}</td>
             <td>{{ data?.customer?.phone }}</td>
-            <td>{{ data?.salesman?.name | uppercase }}</td>
-            <td>{{ data?.soldDate | date }}</td>
+            <!-- <td>{{ data?.salesman?.name | uppercase }}</td>
+            <td>{{ data?.soldDate | date }}</td> -->
             <td>৳{{ data?.subTotal | number : "" : "bn" }}</td>
             <td>৳{{ data?.total | number : "" : "bn" }}</td>
             <td>৳{{ data?.discountAmount | number : "" : "bn" }}</td>
