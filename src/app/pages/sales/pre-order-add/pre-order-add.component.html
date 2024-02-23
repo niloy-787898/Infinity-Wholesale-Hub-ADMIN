@@ -1,7 +1,7 @@
 <section class="add-list">
   <div class="page-header">
     <div class="page-title">
-      <h4>New Order</h4>
+      <h4>New Pre Order</h4>
       <h6>Add/Update Order</h6>
     </div>
   </div>
@@ -91,7 +91,11 @@
                     </button>
                   </div>
                   <div>
-                    <input type="text" value="{{ data?.soldQuantity }}" />
+                    <input
+                      type="number"
+                      [value]="data?.soldQuantity"
+                      (input)="changeQuantity($event.target.value, data)"
+                    />
                   </div>
                   <div>
                     <button type="button" (click)="increaseQuantity(data)">

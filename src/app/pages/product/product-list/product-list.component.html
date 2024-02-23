@@ -220,10 +220,10 @@
             <th>Code</th>
             <th>Qty</th>
             <th>Purchase Price</th>
-            <th>Sale Price</th>
             <th>Total Purchase Price</th>
-            <th>Profit</th>
-            <th>Total Amount</th>
+            <th>Sale Price</th>
+            <th>Total Sale</th>
+            <th>Total Profit</th>
             <th>Action</th>
           </tr>
           <tr
@@ -253,24 +253,23 @@
             <td>{{ data?.sku || "-" }}</td>
             <td>{{ data?.quantity || "0" }}</td>
             <td>৳ {{ data?.purchasePrice | number : "" : "bn" || "-" }}</td>
-            <td>৳ {{ data?.salePrice | number : "" : "bn" || "-" }}</td>
-
             <td>
               ৳
               {{
                 data?.purchasePrice * data?.quantity | number : "" : "bn" || "-"
               }}
             </td>
-            <td>
-              ৳
-              {{
-                data?.salePrice - data?.purchasePrice
-                  | number : "" : "bn" || "-"
-              }}
-            </td>
+            <td>৳ {{ data?.salePrice | number : "" : "bn" || "-" }}</td>
             <td>
               ৳
               {{ data?.salePrice * data?.quantity | number : "" : "bn" || "-" }}
+            </td>
+            <td>
+              ৳
+              {{
+                data?.quantity * (data?.salePrice - data?.purchasePrice)
+                  | number : "" : "bn" || "-"
+              }}
             </td>
             <!--            <td>{{ data?.createdAt | date }}</td>-->
             <!--            <td>{{ data?.status === true ? "Yes" : "No" }}</td>-->
@@ -308,13 +307,16 @@
               {{ productCalculation?.totalQuantity }}
             </td>
             <td></td>
+            <td style="font-weight: bold">
+              ৳
+              {{ productCalculation?.totalPurchasePrice | number : "" : "bn" }}
+            </td>
             <td></td>
             <!--            <td>৳ {{ productCalculation?.sumPurchasePrice | number: '' : 'bn'}}</td>-->
             <!--            <td>৳ {{ productCalculation?.sumSalePrice | number: '' : 'bn'}}</td>-->
 
             <td style="font-weight: bold">
-              ৳
-              {{ productCalculation?.totalPurchasePrice | number : "" : "bn" }}
+              ৳ {{ productCalculation?.totalSalePrice | number : "" : "bn" }}
             </td>
             <td style="font-weight: bold">
               ৳
@@ -323,12 +325,8 @@
                   productCalculation?.totalPurchasePrice | number : "" : "bn"
               }}
             </td>
-            <td style="font-weight: bold">
-              ৳ {{ productCalculation?.totalSalePrice | number : "" : "bn" }}
-            </td>
+
             <td></td>
-            <td></td>
-            <!--            <td></td>-->
           </tr>
         </table>
       </div>

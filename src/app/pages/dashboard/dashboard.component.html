@@ -22,7 +22,7 @@
       <div class="card-body">
         <div class="card-number" matTooltip="Today Sale">
           <h3>
-            {{
+            ৳{{
               saleDashboard?.totalSale
                 ? (saleDashboard?.totalSale | number : "" : "bn")
                 : 0
@@ -82,7 +82,7 @@
       <div class="card-body">
         <div class="card-number" matTooltip="Total work direction today">
           <h3>
-            {{
+            ৳{{
               saleDashboard?.totalProfit> 0
                 ? (saleDashboard?.totalProfit | number : "" : "bn")
                 : 0
@@ -100,7 +100,7 @@
   </div>
   <div class="section2-main">
     <!---card-->
-    <div class="card" [routerLink]="['../expense/expense-list']">
+    <!-- <div class="card" [routerLink]="['../expense/expense-list']">
       <div class="card-top" style="background-color: rgb(47 94 179)">
         <div class="card-top-left">
           <h3>Today Expense</h3>
@@ -124,13 +124,12 @@
         <div class="card-activity">
           <h5 matTooltip="Today Expense">
             <mat-icon style="color: rgb(47 94 179)">show_chart</mat-icon>
-            <!--            {{0}}%-->
           </h5>
         </div>
       </div>
-    </div>
+    </div> -->
     <!---card-->
-    <div class="card">
+    <!-- <div class="card">
       <div class="card-top" style="background-color: #ef0000b8">
         <div class="card-top-left">
           <h3>Today Loss</h3>
@@ -154,11 +153,10 @@
         <div class="card-activity">
           <h5 matTooltip="Total Loss">
             <mat-icon style="color: #ef0000b8">show_chart</mat-icon>
-            <!--            {{0}}%-->
           </h5>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 

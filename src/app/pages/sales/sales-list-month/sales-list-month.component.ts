@@ -147,7 +147,6 @@ export class SalesListMonthComponent implements OnInit {
       this.filter = { ...this.filter, ...qData };
       this.setDefaultFilter();
       this.getAllNewSales();
-      this.getAllBrands();
       this.getAllSalesman();
     });
   }
@@ -366,30 +365,7 @@ export class SalesListMonthComponent implements OnInit {
     });
   }
 
-  private getAllBrands() {
-    // Select
-    const mSelect = {
-      name: 1,
-    };
 
-    const filterData: FilterData = {
-      pagination: null,
-      filter: null,
-      select: mSelect,
-      sort: { name: 1 },
-    };
-
-    this.subDataThree = this.brandService
-      .getAllBrands(filterData, null)
-      .subscribe({
-        next: (res) => {
-          this.brands = res.data;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-  }
   private getAllSalesman() {
     // Select
     const mSelect = {
@@ -1158,6 +1134,7 @@ export class SalesListMonthComponent implements OnInit {
       },
     };
   }
+
 
   getCalculationTable(m: NewSales) {
     return {

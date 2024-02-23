@@ -309,10 +309,8 @@
               </td>
               <td>{{ data?.invoiceNo }}</td>
               <td>{{ data?.customer?.phone || "-" }}</td>
-              <ng-container *ngFor="let product of data.products">
-                <td>{{ product.name | uppercase }}</td>
-                <td>{{ product.soldQuantity }}</td>
-              </ng-container>
+              <td>{{ data?.products[0]?.name | uppercase }}</td>
+              <td>{{ data?.products[0]?.soldQuantity }}</td>
               <td>{{ data?.soldDate | date }}</td>
               <td>৳{{ data?.subTotal | number : "" : "bn" || "-" }}</td>
               <td>৳{{ data?.discountAmount | number : "" : "bn" || "-" }}</td>

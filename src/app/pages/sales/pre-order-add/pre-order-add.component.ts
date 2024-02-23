@@ -383,6 +383,39 @@ export class PreOrderAddComponent implements OnInit {
     })
     console.warn(this.products)
   }
+  changeQuantity(newQuantity: number, data: Product) {
+    if (this.products) {
+      this.uiService.warn("You can't change product quantity on a new sale");
+    } else {
+      this.products = this.products.map((m) => {
+        if (m._id === data._id) {
+          if (newQuantity >= 0) {
+            const difference = newQuantity - m.soldQuantity;
+            if (difference > 0) {
+              // Increase quantity
+              if (m.quantity >= m.soldQuantity + difference) {
+                m.soldQuantity += difference;
+                this.subTotal += difference * data?.salePrice;
+                this.total = this.subTotal - this.discount
+              } else {
+                this.uiService.warn(
+                  "You can't add more quantity than available in stock"
+                );
+              }
+            } else if (difference < 0) {
+              // Decrease quantity
+              m.soldQuantity = newQuantity;
+              this.subTotal += difference * data?.salePrice;
+              this.total = this.subTotal - this.discount
+            }
+          } else {
+            this.uiService.warn('Quantity cannot be less than zero');
+          }
+        }
+        return m;
+      });
+    }
+  }
 
   decreseQuantity(data: Product) {
     this.products = this.products.map((m) => {

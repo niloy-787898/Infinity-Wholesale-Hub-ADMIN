@@ -49,7 +49,7 @@ export class NewSalesComponent implements OnInit {
   @ViewChild('searchForm') searchForm: NgForm;
   @ViewChild('searchInput') searchInput: ElementRef;
 
-  statusOptions: string[] = ['Pending','Hold', 'Ready for Shipping', 'Completed', 'Canceled']; // Assume this is fetched from the backend
+  statusOptions: string[] = ['Pending','Hold', 'Ready for Shipping', 'Completed', 'Canceled'];
 
   // Store Data
   id?: string;
@@ -93,6 +93,8 @@ export class NewSalesComponent implements OnInit {
     private utilsService: UtilsService
   ) {
     (window as any).pdfMake.vfs = pdfFonts.pdfMake.vfs;
+     // Initialize the status property if needed
+     this.status = this.statusOptions[0]; // Set default status
   }
 
   ngOnInit(): void {
@@ -107,7 +109,7 @@ export class NewSalesComponent implements OnInit {
         this.getNewSalesById();
       }
     });
-    this.getAllCustomers();
+    // this.getAllCustomers();
   }
 
   /**
@@ -195,35 +197,35 @@ export class NewSalesComponent implements OnInit {
    * updateNewSalesById()
    */
 
-  private getAllCustomers() {
-    // Select
-    const mSelect = {
-      name: 1,
-      slug: 1,
-    };
+  // private getAllCustomers() {
+  //   // Select
+  //   const mSelect = {
+  //     name: 1,
+  //     slug: 1,
+  //   };
 
-    const filterData: FilterData = {
-      pagination: null,
-      filter: null,
-      select: mSelect,
-      sort: { name: 1 },
-    };
+  //   const filterData: FilterData = {
+  //     pagination: null,
+  //     filter: null,
+  //     select: mSelect,
+  //     sort: { name: 1 },
+  //   };
 
-    this.subDataOne = this.customerService
-      .getAllCustomers(filterData, null)
-      .subscribe({
-        next: (res) => {
-          this.customers = res.data;
-          // if (this.id) {
-          //   const customer = this.customers.find(f => f._id === this.newSales.customer._id);
-          //   this.dataForm.patchValue({ customer: customer._id });
-          // }
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-  }
+  //   this.subDataOne = this.customerService
+  //     .getAllCustomers(filterData, null)
+  //     .subscribe({
+  //       next: (res) => {
+  //         this.customers = res.data;
+  //         // if (this.id) {
+  //         //   const customer = this.customers.find(f => f._id === this.newSales.customer._id);
+  //         //   this.dataForm.patchValue({ customer: customer._id });
+  //         // }
+  //       },
+  //       error: (error) => {
+  //         console.log(error);
+  //       },
+  //     });
+  // }
 
   private addNewSales(type?: string) {
     this.spinnerService.show();
@@ -306,6 +308,7 @@ export class NewSalesComponent implements OnInit {
             this.discount = this.newSales.discountAmount;
             this.discountPercent = this.newSales.discountPercent;
             this.shippingCharge = this.newSales.shippingCharge;
+            this.status = this.newSales.status;
             console.log(this.newSales);
             this.setFormValue();
           }

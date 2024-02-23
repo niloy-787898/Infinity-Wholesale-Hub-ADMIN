@@ -144,7 +144,7 @@
       <div class="form-down">
         <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
-          <mat-select [(value)]="status">
+          <mat-select [(ngModel)]="status" (ngModelChange)="onStatusChange($event)">
             <mat-option *ngFor="let option of statusOptions" [value]="option">{{ option }}</mat-option>
           </mat-select>
         </mat-form-field>
