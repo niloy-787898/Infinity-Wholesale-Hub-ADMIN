@@ -1,11 +1,7 @@
 <div class="header-area">
   <div class="header-main">
     <div class="logo" routerLink="/">
-      <img
-        src="assets/brand/Infinity-wh.png"
-        style="width: 50px"
-        alt=""
-      />
+      <img src="assets/brand/Infinity-wh.png" style="width: 50px" alt="" />
     </div>
     <div class="menu-bar">
       <span (click)="sideNavToggle()" class="material-icons">menu</span>
@@ -208,7 +204,7 @@
                     >
                   </li>
 
-                  <!-- <li
+                  <li
                     routerLinkActive="sub-link-active"
                     *ngIf="USER_ROLE === 'super_admin'"
                   >
@@ -219,7 +215,7 @@
                         arrow_right </span
                       >Sales Return Report</a
                     >
-                  </li> -->
+                  </li>
                   <!-- <li
                     routerLinkActive="sub-link-active"
                     *ngIf="USER_ROLE === 'super_admin'"
@@ -248,7 +244,7 @@
               </div>
             </li>
 
-            <li *ngIf="USER_ROLE === 'super_admin'">
+            <!-- <li *ngIf="USER_ROLE === 'super_admin'">
               <div
                 class="menu-item"
                 (click)="subMenuToggle(5)"
@@ -303,18 +299,23 @@
                       >Add Customer</a
                     >
                   </li>
-                  <!--                  <li routerLinkActive="sub-link-active">-->
-                  <!--                    <a routerLink="people/supplier-list"><span class="material-symbols-outlined">arrow_right-->
-                  <!--                    </span>Supplier</a>-->
-                  <!--                  </li>-->
-                  <!--                  <li routerLinkActive="sub-link-active">-->
-                  <!--                    <a routerLink="people/user-list"><span class="material-symbols-outlined">-->
-                  <!--                     arrow_right-->
-                  <!--                    </span>User</a>-->
-                  <!--                  </li>-->
+                  <li routerLinkActive="sub-link-active">
+                    <a routerLink="people/supplier-list"
+                      ><span class="material-symbols-outlined"
+                        >arrow_right </span
+                      >Supplier</a
+                    >
+                  </li>
+                  <li routerLinkActive="sub-link-active">
+                    <a routerLink="people/user-list"
+                      ><span class="material-symbols-outlined">
+                        arrow_right </span
+                      >User</a
+                    >
+                  </li>
                 </ul>
               </div>
-            </li>
+            </li> -->
 
             <li *ngIf="USER_ROLE === 'super_admin'">
               <div

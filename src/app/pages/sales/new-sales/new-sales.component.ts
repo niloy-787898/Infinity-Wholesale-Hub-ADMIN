@@ -86,7 +86,6 @@ export class NewSalesComponent implements OnInit {
     private uiService: UiService,
     private spinnerService: NgxSpinnerService,
     private activatedRoute: ActivatedRoute,
-    private customerService: CustomerService,
     private newSalesService: NewSalesService,
     private router: Router,
     private dialog: MatDialog,
@@ -126,6 +125,7 @@ export class NewSalesComponent implements OnInit {
         Validators.minLength(11),
       ]),
       address: [null],
+      soldDate: [new Date()]
     });
   }
 

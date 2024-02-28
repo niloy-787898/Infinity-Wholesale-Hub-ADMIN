@@ -108,9 +108,10 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.spinner.show();
+    this.spinner.show();
     if (this.dataForm.invalid) {
-      this.uiService.warn('Please filed all the required field');
+      this.uiService.warn('Please fill all the required fields');
+      this.spinner.hide(); // Hide spinner if form is invalid
       return;
     }
 
@@ -121,8 +122,7 @@ export class AddProductComponent implements OnInit {
       mData = {
         ...mData,
         ...{
-          quantity:
-            this.dataForm.value.quantity + this.dataForm.value.newQuantity,
+          quantity: this.dataForm.value.quantity + this.dataForm.value.newQuantity,
         },
       };
     }
@@ -138,10 +138,17 @@ export class AddProductComponent implements OnInit {
         this.addProductWithImage(mData);
       } else {
         this.addProduct(mData);
-        // this.spinner.hide();
       }
     }
+
+    // Navigate after adding or updating product
+    const delayMilliseconds = 3000; // 3 seconds
+    setTimeout(() => {
+      this.router.navigate(['/product/product-list']);
+      this.spinner.hide(); // Hide spinner after navigation
+    }, delayMilliseconds);
   }
+
 
   /**
    * HTTP REQ HANDLE

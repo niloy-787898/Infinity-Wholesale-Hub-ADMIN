@@ -22,6 +22,7 @@
         class="grid"
         style="margin-bottom: 20px"
       >
+        <!-- Customer Name -->
         <div class="from">
           <mat-label>Customer Name</mat-label>
           <mat-form-field appearance="outline" class="form-field">
@@ -29,6 +30,8 @@
             <mat-error>This field is required</mat-error>
           </mat-form-field>
         </div>
+
+        <!-- Customer Phone No -->
         <div class="from">
           <mat-label>Customer Phone No</mat-label>
           <mat-form-field appearance="outline" class="form-field">
@@ -36,6 +39,8 @@
             <mat-error>This field is required</mat-error>
           </mat-form-field>
         </div>
+
+        <!-- Customer Address -->
         <div class="from">
           <mat-label>Customer Address</mat-label>
           <mat-form-field appearance="outline" class="form-field">
@@ -43,6 +48,8 @@
             <mat-error>This field is required</mat-error>
           </mat-form-field>
         </div>
+
+        <!-- Sold Date -->
         <div class="from">
           <mat-label>Sold Date</mat-label>
           <mat-form-field appearance="outline">
@@ -50,8 +57,8 @@
               matInput
               [matDatepicker]="picker"
               placeholder="DD-MM-YYYY"
-              [ngModel]="soldDate"
               disabled
+              formControlName="soldDate"
             />
             <mat-datepicker-toggle
               matSuffix
@@ -87,8 +94,7 @@
               </td>
               <td class="productimage">
                 <a class="product-text"
-                  >{{ data.name }} ({{ data?.sku ? data?.sku + "," : ""
-                  }})</a
+                  >{{ data.name }} ({{ data?.sku ? data?.sku + "," : "" }})</a
                 >
               </td>
               <td *ngIf="!id">{{ data?.quantity }}</td>
@@ -134,9 +140,6 @@
       </div>
     </div>
 
-
-
-
     <div class="grid">
       <div class="from"></div>
       <div class="from"></div>
@@ -144,8 +147,13 @@
       <div class="form-down">
         <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
-          <mat-select [(ngModel)]="status" (ngModelChange)="onStatusChange($event)">
-            <mat-option *ngFor="let option of statusOptions" [value]="option">{{ option }}</mat-option>
+          <mat-select
+            [(ngModel)]="status"
+            (ngModelChange)="onStatusChange($event)"
+          >
+            <mat-option *ngFor="let option of statusOptions" [value]="option">{{
+              option
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -207,11 +215,15 @@
         </tr>
         <tr>
           <td>Discount In Percentage</td>
-          <td class="number-color">৳{{ (discountPercent / 100) * subTotal | number : "" : "bn" }}</td>
+          <td class="number-color">
+            ৳{{ (discountPercent / 100) * subTotal | number : "" : "bn" }}
+          </td>
         </tr>
         <tr>
           <td>Shipping Charge</td>
-          <td class="number-color">৳{{ shippingCharge | number : "" : "bn" }}</td>
+          <td class="number-color">
+            ৳{{ shippingCharge | number : "" : "bn" }}
+          </td>
         </tr>
         <tr>
           <td class="total">Grand Total</td>
